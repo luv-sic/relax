@@ -1,0 +1,10 @@
+logs/
+npm-debug.log
+.yarn-error.log
+node_modules/
+.idea/
+.history
+.DS_Store
+*.swp
+dist/
+examples/
