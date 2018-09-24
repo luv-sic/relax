@@ -1,18 +1,28 @@
-import ts from 'rollup-plugin-typescript';
-import typescript from 'typescript';
+import typescript from 'rollup-plugin-typescript2'
+import external from 'rollup-plugin-peer-deps-external'
 
-import pkg from './package.json';
+import pkg from './package.json'
 
 export default {
-  input: 'src/index.tsx',
-  external: [],
-  plugins: [
-    ts({
-      typescript,
-    }),
-  ],
+  input: 'src/index.ts',
   output: [
-    { file: pkg.main, format: 'cjs' },
-    { file: pkg.module, format: 'es' },
+    {
+      file: pkg.main,
+      format: 'cjs',
+      exports: 'named',
+      sourcemap: true
+    },
+    {
+      file: pkg.module,
+      format: 'es',
+      exports: 'named',
+      sourcemap: true
+    }
   ],
-};
+  plugins: [
+    external(),
+    typescript({
+      rollupCommonJSResolveHack: true
+    }),
+  ]
+}
