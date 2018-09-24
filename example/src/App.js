@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
-import Example from 'stamen'
+import Counter from './Counter'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Example name="stamen" />
+        <Counter />
       </div>
     )
   }
