@@ -1,6 +1,6 @@
-import { Model } from 'stamen'
+import { Store } from 'stamen'
 
-class CounterStore extends Model {
+class CounterStore extends Store {
   state = {
     count: 0,
   }

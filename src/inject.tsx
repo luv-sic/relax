@@ -1,50 +1,25 @@
 import * as React from 'react'
+import Store from './Store'
 
-function getDisplayName(WrappedComponent) {
-  return WrappedComponent.displayName || WrappedComponent.name || 'Component'
-}
+export default function inject(...stores: Store[]) {
+  return function wrapWithInject(WrappedComponent: React.ComponentType) {
+    return class Inject extends React.Component<{}> {
+      static displayName = `Inject(${getDisplayName(WrappedComponent)})`
 
-export default function inject(...stores: object[]) {
-  return function wrapWithConnect(WrappedComponent): React.ReactNode {
-    interface HocProps {
-      [propName: string]: number
-    }
-
-    return class Connect extends React.Component<HocProps> {
-      static displayName = `Connect(${getDisplayName(WrappedComponent)})`
-
-      state = {
+      readonly state = {
         store: {},
       }
 
-      stores: any
-      unmounted: boolean = false
-      instances: any[]
-      unsubscribe: any
+      stores: object
+      unsubscribe: () => void
 
       constructor(props, context) {
         super(props, context)
-        this.stores = this.createStores(stores)
-      }
-
-      createStores = Stores => {
-        const instances = {}
-        Stores.forEach(store => {
-          const { name } = store.constructor
-          const key = this.firstLowerCase(name)
-          instances[key] = store
-        })
-        return instances
+        this.stores = createStores(stores)
       }
 
       listener = () => {
-        if (!this.unmounted) {
-          this.setState({ store: this.stores })
-        }
-      }
-
-      firstLowerCase(str: string): string {
-        return str.replace(/^[A-Z]/g, L => L.toLowerCase())
+        this.setState({ store: this.stores })
       }
 
       componentDidMount() {
@@ -61,6 +36,7 @@ export default function inject(...stores: object[]) {
       }
 
       render() {
+        console.log('render inject.........')
         const props = {
           ...this.props,
           ...this.state.store,
@@ -71,4 +47,22 @@ export default function inject(...stores: object[]) {
       }
     }
   }
+}
+
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component'
+}
+
+function createStores(stores) {
+  const instances = {}
+  stores.forEach(store => {
+    const { name } = store.constructor
+    const key = firstLowerCase(name)
+    instances[key] = store
+  })
+  return instances
+}
+
+function firstLowerCase(str: string): string {
+  return str.replace(/^[A-Z]/g, L => L.toLowerCase())
 }
