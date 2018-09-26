@@ -7,7 +7,9 @@ export default class Store {
   private listeners: Listener[] = []
   setState = (updater?) => {
     Object.keys(updater).forEach(key => (this[key] = updater[key]))
-    this.listeners.forEach(listener => listener(this))
+    setTimeout(() => {
+      this.listeners.forEach(listener => listener(this))
+    }, 0)
   }
   subscribe(fn: Listener) {
     this.listeners.push(fn)
@@ -21,7 +23,7 @@ export default class Store {
   }
 }
 
-class Provider extends React.Component {
+class Provider extends React.Component<any> {
   state: object
   unsubscribe: () => void
   constructor(props) {
@@ -49,7 +51,7 @@ const Consumer = props => {
   return <Ctx.Consumer>{store => props.children(store)}</Ctx.Consumer>
 }
 
-const consume = () => Component => props => (
+const consume: any = () => Component => props => (
   <Ctx.Consumer children={store => <Component {...props} {...store} />} />
 )
 
