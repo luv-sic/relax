@@ -25,6 +25,7 @@
     "no-debugger": false,
     "jsx-no-lambda": false,
     "object-literal-sort-keys": false,
+    "max-classes-per-file": false,
     "ordered-imports": false,
     "member-access": false,
     "curly": [true, "ignore-same-line"],

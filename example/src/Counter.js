@@ -1,16 +1,24 @@
 import React from 'react'
-import { inject } from 'stamen'
-import counterStore from './counterStore'
+import { Consumer } from 'stamen'
 
-const Counter = ({ counterStore }) => {
+const Counter = () => {
   return (
     <div style={{ textAlign: 'center' }}>
-      <h3>{counterStore.state.count}</h3>
-      <button onClick={() => counterStore.decrement()}>-</button>
-      <button onClick={() => counterStore.increment()}>+</button>
-      <button onClick={() => counterStore.incrementAsync()}>+ Async</button>
+      <Consumer select={store => store}>
+        {({ counterStore }) => (
+          <div>
+            <h3>100</h3>
+            <h3>{counterStore.count}</h3>
+            <button onClick={() => counterStore.decrement()}>-</button>
+            <button onClick={() => counterStore.increment()}>+</button>
+            <button onClick={() => counterStore.incrementAsync()}>
+              + Async
+            </button>
+          </div>
+        )}
+      </Consumer>
     </div>
   )
 }
 
-export default inject(counterStore)(Counter)
+export default Counter

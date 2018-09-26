@@ -1,21 +1,20 @@
 import { Store } from 'stamen'
 
 class CounterStore extends Store {
-  state = {
-    count: 0,
-  }
+  count = 0
 
   increment() {
-    this.setState({ count: this.state.count + 1 })
+    console.log('+++')
+    this.setState({ count: this.count + 1 })
   }
 
   decrement() {
-    this.setState({ count: this.state.count - 1 })
+    this.setState({ count: this.count - 1 })
   }
 
   incrementAsync() {
     setTimeout(() => {
-      this.setState({ count: this.state.count + 1 })
+      this.setState({ count: this.count + 1 })
     }, 1000)
   }
 }
