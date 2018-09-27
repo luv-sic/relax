@@ -1,58 +1,82 @@
 import * as React from 'react'
 
-const Ctx = React.createContext({})
-type Listener = (state?) => void
+interface ProviderProps {
+  children: React.ReactNode
+}
 
-export default class Store {
-  private listeners: Listener[] = []
-  setState = (updater?) => {
+interface ConsumerProps<T> {
+  children: (store: T) => React.ReactNode
+  pick?: (store: T) => any
+}
+
+type Updater = (partialState: object) => void
+
+function createContext<T>(initialStore: T) {
+  const Ctx = React.createContext({})
+
+  return {
+    Provider: class extends React.Component<ProviderProps> {
+      state: T
+      unsubscribe: () => void
+      constructor(props: ProviderProps) {
+        super(props)
+        this.state = initialStore
+      }
+      update = () => {
+        this.setState({})
+      }
+      componentDidMount() {
+        Object.keys(this.state).forEach(key => {
+          this.unsubscribe = this.state[key].subscribe(this.update)
+        })
+      }
+      componentWillUnmount() {
+        this.unsubscribe()
+      }
+      render() {
+        return (
+          <Ctx.Provider value={this.state} children={this.props.children} />
+        )
+      }
+    },
+
+    Consumer: (props: ConsumerProps<T>) => {
+      return (
+        <Ctx.Consumer
+          children={(store: T) =>
+            props.children(props.pick ? props.pick(store) : store)
+          }
+        />
+      )
+    },
+
+    consume: (pick: (store: T) => any) => (Component: React.ComponentType) => (
+      props: any,
+    ) => (
+      <Ctx.Consumer
+        children={(store: T) => <Component {...props} {...pick(store)} />}
+      />
+    ),
+  }
+}
+
+class Store {
+  private updaters: Updater[] = []
+  setState(updater: object) {
     Object.keys(updater).forEach(key => (this[key] = updater[key]))
     setTimeout(() => {
-      this.listeners.forEach(listener => listener(this))
+      this.updaters.forEach(update => update(this))
     }, 0)
   }
-  subscribe(fn: Listener) {
-    this.listeners.push(fn)
+  subscribe(fn: Updater) {
+    this.updaters.push(fn)
     return () => {
       this.unsubscribe(fn)
     }
   }
-  unsubscribe(fn: Listener) {
-    const index = this.listeners.indexOf(fn)
-    this.listeners.splice(index, 1)
+  private unsubscribe(fn: Updater) {
+    const index = this.updaters.indexOf(fn)
+    this.updaters.splice(index, 1)
   }
 }
-
-class Provider extends React.Component<any> {
-  state: object
-  unsubscribe: () => void
-  constructor(props) {
-    super(props)
-    const { children, ...rest } = props
-    this.state = { ...rest }
-  }
-  update = newStore => {
-    this.setState({ [newStore.constructor.name]: newStore })
-  }
-  componentDidMount() {
-    Object.keys(this.state).forEach(key => {
-      this.unsubscribe = this.state[key].subscribe(this.update)
-    })
-  }
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
-  render() {
-    return <Ctx.Provider value={this.state}>{this.props.children}</Ctx.Provider>
-  }
-}
-
-const Consumer = props => {
-  return <Ctx.Consumer>{store => props.children(store)}</Ctx.Consumer>
-}
-
-const consume: any = () => Component => props => (
-  <Ctx.Consumer children={store => <Component {...props} {...store} />} />
-)
-
-export { Store, Provider, Consumer, consume }
+export { createContext, Store }

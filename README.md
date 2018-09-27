@@ -4,11 +4,9 @@
 
 - **Lightweight** less 1kb after gzip, no dependences
 - **Minimalist** zero boilerplate, minimal [api](#api)
-- **Intuitive** no complex concept, thinking in React
+- **Intuitive** no complex concept, thinking in React
 - **maintainable** Easy to write maintainable and readable code
 
-
-[Context Api](https://reactjs.org/docs/context.html)
 
 ## Table of Contents
 

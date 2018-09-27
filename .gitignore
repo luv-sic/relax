@@ -1,6 +1,6 @@
 logs/
 npm-debug.log
-.yarn-error.log
+yarn-error.log
 node_modules/
 .idea/
 .history

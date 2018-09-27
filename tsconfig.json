@@ -2,13 +2,14 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
+    "module": "esnext",
     "target": "es5",
     "lib": ["es7", "dom"],
     "jsx": "react",
     "experimentalDecorators": true,
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -16,5 +17,5 @@
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": true
   },
-  "exclude": ["node_modules", "dist", "example"]
+  "exclude": ["node_modules", "dist", "examples"]
 }
