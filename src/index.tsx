@@ -8,9 +8,9 @@ export interface ConsumerProps<T> {
 export type mutateFn<T> = (draft: T) => void
 type Updater<T> = (fn: mutateFn<T>) => void
 
-export { createState }
+export { createStore }
 
-function createState<T>(initialState: T) {
+function createStore<T>(initialState: T) {
   const updaters: Array<Updater<T>> = []
 
   const Consumer = class extends React.Component<ConsumerProps<T>> {
@@ -44,7 +44,6 @@ function createState<T>(initialState: T) {
   }
   return {
     Consumer,
-    consume: {},
     mutate,
   }
 }
