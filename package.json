@@ -10,7 +10,6 @@
   ],
   "scripts": {
     "clean:dist": "rimraf dist/*",
-    "tsc": "tsc",
     "min": "terser dist/index.js -o dist/index.min.js",
     "build": "npm run clean:dist && rollup -c && npm run min",
     "build:watch": "npm run clean:dist && rollup -c -w",
@@ -69,5 +68,8 @@
   "peerDependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
+  },
+  "dependencies": {
+    "immer": "^1.7.2"
   }
 }

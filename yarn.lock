@@ -1161,6 +1161,10 @@ husky@^0.14.3:
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
 
+immer@^1.7.2:
+  version "1.7.2"
+  resolved "http://registry.npm.taobao.org/immer/download/immer-1.7.2.tgz#a51e9723c50b27e132f6566facbec1c85fc69547"
+
 indent-string@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.alibaba-inc.com/indent-string/download/indent-string-2.1.0.tgz#8e2d48348742121b4a8218b7a137e9a52049dc80"
