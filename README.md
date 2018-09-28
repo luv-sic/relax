@@ -43,7 +43,10 @@ render(<App />, document.getElementById('root'))
 
 ### Examples on CodeSandbox
 
-[Basic](https://codesandbox.io/s/0vrrlkjx5w) · [Use Hoc](https://codesandbox.io/s/0vrrlkjx5w) · [Async](https://codesandbox.io/s/0vrrlkjx5w)
+- [Basic example](https://codesandbox.io/s/0vrrlkjx5w) 
+- [Async example](https://codesandbox.io/s/kmq65p3l97)
+
+
 
 ## API
 
@@ -63,14 +66,14 @@ const { Consumer, mutate } = createStore({
 })
 
 export function increment() {
-  mutate(draft => {
-    draft.count++
+  mutate(state => {
+    state.count++
   })
 }
 
 export function decrement() {
-  mutate(draft => {
-    draft.count--
+  mutate(state => {
+    state.count--
   })
 }
 

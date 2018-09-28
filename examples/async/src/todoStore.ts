@@ -13,8 +13,8 @@ export function fetchTodo(id: number) {
   fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
     .then(response => response.json())
     .then(json => {
-      mutate(draft => {
-        draft.currentItem = json
+      mutate(state => {
+        state.currentItem = json
       })
     })
 }
