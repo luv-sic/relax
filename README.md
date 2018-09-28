@@ -26,20 +26,16 @@ yarn add stamen
 ```js
 import React from 'react'
 import { render } from 'react-dom'
-import { createState } from 'stamen'
+import { createStore } from 'stamen'
 
-const { Consumer, mutate } = createState({ count: 1 })
+const { Consumer, mutate } = createStore({ count: 1 })
 
 const App = () => (
-  <Consumer>
-    {state => (
-      <div>
-        <h3>{state.count}</h3>
-        <button onClick={() => mutate(d => d.count--)}>-</button>
-        <button onClick={() => mutate(d => d.count++)}>+</button>
-      </div>
-    )}
-  </Consumer>
+  <div>
+    <Consumer>{state => <span>{state.count}</span>}</Consumer>
+    <button onClick={() => mutate(d => d.count--)}>-</button>
+    <button onClick={() => mutate(d => d.count++)}>+</button>
+  </div>
 )
 
 render(<App />, document.getElementById('root'))
@@ -51,7 +47,7 @@ render(<App />, document.getElementById('root'))
 
 ## API
 
-- createState
+- createStore
   - Consumer
   - mutate
 
@@ -60,9 +56,9 @@ Create a store, use `Consumer` render state, use `mutate` method to update state
 A Store recommended in Real world:
 
 ```js
-import { createState } from 'stamen'
+import { createStore } from 'stamen'
 
-const { Consumer, consume, mutate } = createState({
+const { Consumer, mutate } = createStore({
   count: 1,
 })
 
@@ -78,5 +74,5 @@ export function decrement() {
   })
 }
 
-export { Consumer, consume, mutate }
+export { Consumer, mutate }
 ```
