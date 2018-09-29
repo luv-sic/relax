@@ -6,8 +6,8 @@ const { Consumer, mutate } = createStore({ count: 1 })
 const App = () => (
   <div>
     <Consumer>{state => <span>{state.count}</span>}</Consumer>
-    <button onClick={() => mutate(d => d.count--)}>-</button>
-    <button onClick={() => mutate(d => d.count++)}>+</button>
+    <button onClick={() => mutate(state => state.count--)}>-</button>
+    <button onClick={() => mutate(state => state.count++)}>+</button>
   </div>
 )
 

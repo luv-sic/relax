@@ -33,8 +33,8 @@ const { Consumer, mutate } = createStore({ count: 1 })
 const App = () => (
   <div>
     <Consumer>{state => <span>{state.count}</span>}</Consumer>
-    <button onClick={() => mutate(d => d.count--)}>-</button>
-    <button onClick={() => mutate(d => d.count++)}>+</button>
+    <button onClick={() => mutate(state => state.count--)}>-</button>
+    <button onClick={() => mutate(state => state.count++)}>+</button>
   </div>
 )
 
@@ -53,6 +53,7 @@ render(<App />, document.getElementById('root'))
 - createStore
   - Consumer
   - mutate
+  - getState
 
 Create a store, use `Consumer` render state, use `mutate` method to update state. 
 
@@ -79,3 +80,9 @@ export function decrement() {
 
 export { Consumer, mutate }
 ```
+
+### Consumer
+
+### mutate
+
+### getState

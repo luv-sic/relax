@@ -9,14 +9,14 @@ const { Consumer, mutate } = createStore({
   },
 })
 
-export function fetchTodo(id: number) {
-  fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
-    .then(response => response.json())
-    .then(json => {
-      mutate(state => {
-        state.currentItem = json
-      })
-    })
+export async function fetchTodo(id: number) {
+  const json = await fetch(
+    `https://jsonplaceholder.typicode.com/todos/${id}`,
+  ).then(response => response.json())
+
+  mutate(state => {
+    state.currentItem = json
+  })
 }
 
 export { Consumer, mutate }

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TodoTextInput from './TodoTextInput'
-import { addTodo } from '../stores/todoStore'
+import { addTodo } from 'stores/todoStore'
 
 const Header = () => (
   <header className="header">

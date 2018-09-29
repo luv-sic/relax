@@ -10,7 +10,7 @@ class App extends React.Component {
       <div className="App">
         <h3>Current Todo Item: </h3>
         <Consumer>
-          {store => <pre>{JSON.stringify(store.currentItem, null, 2)}</pre>}
+          {state => <pre>{JSON.stringify(state.currentItem, null, 2)}</pre>}
         </Consumer>
         <button onClick={() => fetchTodo(2)}>Get New Todo Item</button>
       </div>

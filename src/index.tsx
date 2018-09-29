@@ -10,21 +10,17 @@ type Updater<T> = (fn: mutateFn<T>) => void
 
 export { createStore }
 
-function createStore<T>(initialState: T) {
+function createStore<T>(state: T) {
   const updaters: Array<Updater<T>> = []
-
+  let nextState: any
   const Consumer = class extends React.Component<ConsumerProps<T>> {
-    state: T
-    constructor(props: ConsumerProps<T>) {
-      super(props)
-      this.state = initialState
-    }
+    state: T = state
     componentDidMount() {
       updaters.push(this.update)
     }
     update = (fn: mutateFn<T>) => {
-      this.setState(state => {
-        const nextState = produce(state, (draft: T) => {
+      this.setState(currentState => {
+        nextState = produce(currentState, (draft: T) => {
           fn(draft)
         })
         return nextState
@@ -38,12 +34,13 @@ function createStore<T>(initialState: T) {
       return this.props.children(this.state)
     }
   }
-
-  function mutate(fn: mutateFn<T>): void {
+  const mutate = (fn: mutateFn<T>): void => {
     updaters.forEach(update => update(fn))
   }
+  const getState: T | any = () => (nextState ? nextState : state)
   return {
     Consumer,
     mutate,
+    getState,
   }
 }
