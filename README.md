@@ -1,18 +1,24 @@
 # Stamen
 
+
+[![npm](https://img.shields.io/npm/v/stamen.svg)](https://www.npmjs.com/package/stamen) [![install size](https://packagephobia.now.sh/badge?p=stamen)](https://packagephobia.now.sh/result?p=stamen) [![Build Status](https://travis-ci.org/forsigner/stamen.svg?branch=master)](https://travis-ci.org/forsigner/stamen) [![Coverage Status](https://coveralls.io/repos/github/forsigner/stamen/badge.svg?branch=master)](https://coveralls.io/github/forsigner/stamen?branch=master) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) 
+[![GitHub license](https://img.shields.io/github/license/forsigner/stamen.svg)](https://github.com/forsigner/stamen/blob/master/LICENSE)
+
+
 > A sexy state container for React
 
-- **Lightweight** ~650B after gzip, no dependences
-- **Minimalist** zero boilerplate, minimal [api](#api)
-- **Intuitive** no complex concept, thinking in React
-- **maintainable** Easy to write maintainable and readable code
+- **Lightweight** less 700B after gzip, no dependences
+- **Minimalist** zero boilerplate, minimal api
+- **Intuitive** no complex concept, just state and action
+- **Clear** Easy to write maintainable and readable code
 
+State is an An immutable React state management library, powered by [stamen](https://github.com/forsigner/immersta
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [Basic Usage](#basic-Usage)
-- [Examples on CodeSandbox](#examples-on-codeSandbox)
+- [Usage](#usage)
+- [Examples](#examples)
 - [API](#api)
 
 ## Installation
@@ -21,7 +27,7 @@
 yarn add stamen
 ```
 
-## Basic Usage
+## Usage
 
 ```js
 import React from 'react'
@@ -41,23 +47,21 @@ const App = () => (
 render(<App />, document.getElementById('root'))
 ```
 
-### Examples on CodeSandbox
+### Examples
+
+Examples on CodeSandbox
 
 - [Basic example](https://codesandbox.io/s/0vrrlkjx5w) 
 - [Async example](https://codesandbox.io/s/kmq65p3l97)
 
 
-
 ## API
 
-- createStore
-  - Consumer
-  - mutate
-  - getState
+> const { [Consumer](#consumer), [mutate](#mutate), [getState](#getState) } =  createStore(initialState)
 
-Create a store, use `Consumer` render state, use `mutate` method to update state. 
+Create a store instance, use `Consumer` to render state, use `mutate` to update state. We recommend to create multi to in your app.
 
-A Store recommended in Real world:
+A store recommended in Real world:
 
 ```js
 import { createStore } from 'stamen'
@@ -66,6 +70,7 @@ const { Consumer, mutate } = createStore({
   count: 1,
 })
 
+// an action
 export function increment() {
   mutate(state => {
     state.count++
@@ -81,8 +86,38 @@ export function decrement() {
 export { Consumer, mutate }
 ```
 
+Keeping your `state` and `actions` in one file is more better;
+
 ### Consumer
+
+ Use `Consumer` to consume state, Component will re-render if state is mutated;
+
+ ```js
+<Consumer>{state => <span>{state.count}</span>}</Consumer>
+ ```
 
 ### mutate
 
+Action is a function which contain `mutate`, you can call it in anywhere, in React lifecycle fn、stateless componet... even out of React component, so you don't need HOC. 
+
+```js
+function increment() {
+  mutate(state => {
+    state.count++
+  })
+}
+```
+
 ### getState
+
+Get the current state object.
+
+```js
+
+const { getState } = createStore({ count: 1 })
+const currentState = getState()
+```
+
+## License
+
+[MIT License](https://github.com/forsigner/stamen/blob/master/LICENSE)

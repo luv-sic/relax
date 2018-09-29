@@ -10,7 +10,7 @@ type Updater<T> = (fn: mutateFn<T>) => void
 
 export { createStore }
 
-function createStore<T>(state: T) {
+function createStore<T = any>(state: T) {
   const updaters: Array<Updater<T>> = []
   let nextState: any
   const Consumer = class extends React.Component<ConsumerProps<T>> {
