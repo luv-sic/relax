@@ -6,4 +6,4 @@ env:
 cache:
   directories:
     - "node_modules"
-script: npm run coveralls && npm run test
+script: "npm install && npm install --save-dev && npm test"
