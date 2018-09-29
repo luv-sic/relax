@@ -1,7 +1,7 @@
 # Stamen
 
 
-[![npm](https://img.shields.io/npm/v/stamen.svg)](https://www.npmjs.com/package/stamen) [![install size](https://packagephobia.now.sh/badge?p=stamen)](https://packagephobia.now.sh/result?p=stamen) [![Build Status](https://travis-ci.org/forsigner/stamen.svg?branch=master)](https://travis-ci.org/forsigner/stamen) [![Coverage Status](https://coveralls.io/repos/github/forsigner/stamen/badge.svg?branch=master)](https://coveralls.io/github/forsigner/stamen?branch=master) 
+[![npm](https://img.shields.io/npm/v/stamen.svg)](https://www.npmjs.com/package/stamen) ![gzip size](https://img.shields.io/badge/gzip%20size-638%20B-44cc11.svg) [![Coverage Status](https://coveralls.io/repos/github/forsigner/stamen/badge.svg?branch=master)](https://coveralls.io/github/forsigner/stamen?branch=master) 
 [![npm](https://img.shields.io/badge/TypeScript-%E2%9C%93-007ACC.svg)](https://www.typescriptlang.org/) [![GitHub license](https://img.shields.io/github/license/forsigner/stamen.svg)](https://github.com/forsigner/stamen/blob/master/LICENSE)
 
 
@@ -12,7 +12,7 @@
 - **Intuitive** no complex concept, just state and action
 - **Clear** Easy to write maintainable and readable code
 
-State is an An immutable React state management library, powered by [stamen](https://github.com/forsigner/immersta
+State is an An immutable React state management library, powered by [immer](https://github.com/mweststrate/immer)
 
 ## Table of Contents
 
@@ -117,6 +117,14 @@ Get the current state object.
 const { getState } = createStore({ count: 1 })
 const currentState = getState()
 ```
+
+
+### FAQ
+
+**Q: Is it fast?**
+
+A: Yes
+
 
 ## License
 
