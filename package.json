@@ -22,8 +22,6 @@
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "precommit": "lint-staged",
     "commitmsg": "commitlint -E GIT_PARAMS",
-    "docz:dev": "docz dev",
-    "docz:build": "docz build",
     "release": "standard-version"
   },
   "jest": {
@@ -76,7 +74,6 @@
     "@types/react-dom": "^16.0.7",
     "@types/react-test-renderer": "^16.0.2",
     "coveralls": "^3.0.2",
-    "docz": "^0.12.4",
     "husky": "^0.14.3",
     "jest": "^23.6.0",
     "lint-staged": "^7.2.2",

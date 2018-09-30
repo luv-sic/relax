@@ -1,3 +1,5 @@
+<img src="http://forsigner.com/images/stamen-logo.jpg" height="200px" align="right"/>
+
 # Stamen
 
 [![npm](https://img.shields.io/npm/v/stamen.svg)](https://www.npmjs.com/package/stamen) ![gzip size](https://img.shields.io/badge/gzip%20size-638%20B-44cc11.svg) [![Build Status](https://travis-ci.org/forsigner/stamen.svg?branch=master)](https://travis-ci.org/forsigner/stamen) [![Coverage Status](https://coveralls.io/repos/github/forsigner/stamen/badge.svg?branch=master)](https://coveralls.io/github/forsigner/stamen?branch=master)
@@ -5,7 +7,9 @@
 
 > A sexy state container for React
 
-Stamen is an An immutable React state management library.
+Stamen is an An immutable react state management library.
+
+## Hey~
 
 If you're like me, tire of
 provider, connections, actions, reducers, effects, dispatch, put, call, payload, @observable, @computed, @observer, @inject...
@@ -23,14 +27,9 @@ You can try `stamen`.
 - **Intuitive** no complex concept, just state and action
 - **Clear** Easy to write maintainable and readable code
 - **Efficient** High development efficiency, It's important
+- **Typescript** Perfect intellisense with state and action
 - **Sexy** Let you to meet your girlfriend earlier
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Examples](#examples)
-- [API](#api)
 
 ## Installation
 
@@ -58,12 +57,16 @@ const App = () => (
 render(<App />, document.getElementById('root'))
 ```
 
+Check on CodeSandbox: [Basic](https://codesandbox.io/s/0vrrlkjx5w) | [Async](https://codesandbox.io/s/kmq65p3l97)
+
+
 ### Examples
 
-Examples on CodeSandbox
+- [Basic](https://github.com/forsigner/stamen/tree/master/examples/basic) - Most basic usage
+- [Async](https://github.com/forsigner/stamen/tree/master/examples/async) - To query data from remote server
+- [TodoMVC](https://github.com/forsigner/stamen/tree/master/examples/todomvc)  - stamen version TodoMVC
+- [Recommended usage](https://github.com/forsigner/stamen/tree/master/examples/recommended-usage) - Recommended practice with stamen
 
-- [Basic example](https://codesandbox.io/s/0vrrlkjx5w)
-- [Async example](https://codesandbox.io/s/kmq65p3l97)
 
 ## API
 
@@ -156,17 +159,21 @@ Just another choice...
 
 **Support Typescript?**
 
-Yes, it is total type-safety.
-
+Yes, it is total type-safety. Perfect with Typescript.
 
 key typings:
 
 ```js
-declare function createStore<T>(state: T): {
-    consume<S>(selector: (state: T) => S, renderFn?: ((partialState: S) => React.ReactNode) | undefined): JSX.Element;
-    mutate: (fn: (draft: T) => void) => void;
-    getState: () => T;
-};
+declare function createStore<T>(
+  state: T,
+): {
+  consume<S>(
+    selector: (state: T) => S,
+    renderFn?: (partialState: S) => React.ReactNode,
+  ): JSX.Element,
+  mutate: (fn: (draft: T) => void) => void,
+  getState: () => T,
+}
 ```
 
 **Single store or Multiple store?**
