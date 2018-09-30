@@ -1,6 +1,6 @@
 # Stamen
 
-[![npm](https://img.shields.io/npm/v/stamen.svg)](https://www.npmjs.com/package/stamen) ![gzip size](https://img.shields.io/badge/gzip%20size-638%20B-44cc11.svg) [![Coverage Status](https://coveralls.io/repos/github/forsigner/stamen/badge.svg?branch=master)](https://coveralls.io/github/forsigner/stamen?branch=master)
+[![npm](https://img.shields.io/npm/v/stamen.svg)](https://www.npmjs.com/package/stamen) ![gzip size](https://img.shields.io/badge/gzip%20size-638%20B-44cc11.svg) [![Build Status](https://travis-ci.org/forsigner/stamen.svg?branch=master)](https://travis-ci.org/forsigner/stamen) [![Coverage Status](https://coveralls.io/repos/github/forsigner/stamen/badge.svg?branch=master)](https://coveralls.io/github/forsigner/stamen?branch=master)
 [![npm](https://img.shields.io/badge/TypeScript-%E2%9C%93-007ACC.svg)](https://www.typescriptlang.org/) [![GitHub license](https://img.shields.io/github/license/forsigner/stamen.svg)](https://github.com/forsigner/stamen/blob/master/LICENSE)
 
 > A sexy state container for React
@@ -16,7 +16,7 @@ If you just want to get off work early.
 
 You can try `stamen`.
 
-## Why ?
+## Why?
 
 - **Lightweight** less 700B after gzip, no dependences
 - **Minimalist** zero boilerplate, minimal api
@@ -67,7 +67,7 @@ Examples on CodeSandbox
 
 ## API
 
-> const { [consume](#consume), [mutate](#mutate), [getState](#getState) } = createStore(initialState)
+> const { [consume](#consume), [mutate](#mutate), [getState](#getstate) } = createStore(initialState)
 
 Create a store instance, use `consume` to access state, use `mutate` to update state. We recommend to create multiple store in your app.
 
@@ -102,8 +102,27 @@ Keeping your `state` and `actions` in one file is more better;
 
 consume state in Component, Component will re-render if state is mutated;
 
+First, you need create a store, example:
+
+```js
+const { consume, mutate } = createStore({
+  count: 1,
+  info: {
+    name: 'Counter',
+  },
+})
+```
+
+**Simple usage**
+
 ```js
 <span>{consume(state => state.count)}</span>
+```
+
+**Using selectors**
+
+```js
+<span>{consume(state => state.info.name, name => name)}</span>
 ```
 
 ### `mutate()`
@@ -139,7 +158,21 @@ Just another choice...
 
 Yes, it is total type-safety.
 
-**Single store or Multiple store?**
+
+key typings:
+
+```js
+declare function createStore<T = any>(state: T): {
+  consume<S>(
+    selector: (state: T) => S,
+    renderFn?: ((partialState: S) => React.ReactNode)
+  ): JSX.Element
+  mutate(fn: (draft: T) => void): void
+  getState: () => T
+}
+```
+
+**Single store or Multiple store?**
 
 Personally, I would recommend a multi-part solution. More flexible and less Potential performance issues.
 

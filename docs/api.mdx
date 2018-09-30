@@ -6,7 +6,7 @@ order: 70
 
 # API
 
-> const { [consume](#consume), [mutate](#mutate), [getState](#getState) } = createStore(initialState)
+> const { consume, mutate, getState } = createStore(initialState)
 
 Create a store instance, use `consume` to access state, use `mutate` to update state. We recommend to create multiple store in your app.
 
@@ -41,8 +41,27 @@ Keeping your `state` and `actions` in one file is more better;
 
 consume state in Component, Component will re-render if state is mutated;
 
+First, you need create a store, example:
+
+```js
+const { consume, mutate } = createStore({
+  count: 1,
+  info: {
+    name: 'Counter',
+  },
+})
+```
+
+**Simple usage**
+
 ```js
 <span>{consume(state => state.count)}</span>
+```
+
+**Using selectors**
+
+```js
+<span>{consume(state => state.info.name, name => name)}</span>
 ```
 
 ## `mutate()`
