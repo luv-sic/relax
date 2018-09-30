@@ -30,12 +30,15 @@ You can try `stamen`.
 - **Typescript** Perfect intellisense with state and action
 - **Sexy** Let you to meet your girlfriend earlier
 
-
 ## Installation
 
 ```sh
 yarn add stamen
 ```
+
+## Doc
+
+[English](http://forsigner.com/stamen/#/) | [简体中文](http://forsigner.com/stamen-zh-cn/#/)
 
 ## Usage
 
@@ -59,14 +62,12 @@ render(<App />, document.getElementById('root'))
 
 Check on CodeSandbox: [Basic](https://codesandbox.io/s/0vrrlkjx5w) | [Async](https://codesandbox.io/s/kmq65p3l97)
 
-
 ### Examples
 
 - [Basic](https://github.com/forsigner/stamen/tree/master/examples/basic) - Most basic usage
 - [Async](https://github.com/forsigner/stamen/tree/master/examples/async) - To query data from remote server
-- [TodoMVC](https://github.com/forsigner/stamen/tree/master/examples/todomvc)  - stamen version TodoMVC
+- [TodoMVC](https://github.com/forsigner/stamen/tree/master/examples/todomvc) - stamen version TodoMVC
 - [Recommended usage](https://github.com/forsigner/stamen/tree/master/examples/recommended-usage) - Recommended practice with stamen
-
 
 ## API
 
