@@ -1,6 +1,6 @@
 import * as React from 'react'
 import classnames from 'classnames'
-import { Consumer, setVisibilityFilter } from '../stores/todoStore'
+import { consume, setVisibilityFilter } from '../stores/todoStore'
 
 interface LinkProp {
   filter: string
@@ -9,8 +9,8 @@ interface LinkProp {
 }
 
 const Link: React.SFC<LinkProp> = ({ active, children, filter }) => (
-  <Consumer>
-    {({ visibilityFilter }) => (
+  <React.Fragment>
+    {consume(({ visibilityFilter }) => (
       <a
         className={classnames({ selected: filter === visibilityFilter })}
         style={{ cursor: 'pointer' }}
@@ -18,8 +18,8 @@ const Link: React.SFC<LinkProp> = ({ active, children, filter }) => (
       >
         {children}
       </a>
-    )}
-  </Consumer>
+    ))}
+  </React.Fragment>
 )
 
 export default Link

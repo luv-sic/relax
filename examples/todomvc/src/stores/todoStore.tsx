@@ -15,7 +15,7 @@ interface State {
 const initialState: State = {
   todos: [
     {
-      text: 'Use Redux',
+      text: 'Use Stamen',
       completed: false,
       id: 0,
     },
@@ -23,9 +23,9 @@ const initialState: State = {
   visibilityFilter: SHOW_ALL,
 }
 
-const { Consumer, mutate } = createStore(initialState)
+const { consume, mutate } = createStore(initialState)
 
-export { Consumer, mutate }
+export { consume, mutate }
 
 export function addTodo(text: string) {
   mutate(state => {

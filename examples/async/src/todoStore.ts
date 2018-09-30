@@ -1,6 +1,6 @@
 import { createStore } from 'stamen'
 
-const { Consumer, mutate } = createStore({
+const { consume, mutate } = createStore({
   currentItem: {
     id: 1,
     userId: 1,
@@ -19,4 +19,4 @@ export async function fetchTodo(id: number) {
   })
 }
 
-export { Consumer, mutate }
+export { mutate, consume }

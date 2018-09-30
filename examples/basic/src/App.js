@@ -1,11 +1,11 @@
 import React from 'react'
 import { createStore } from 'stamen'
 
-const { Consumer, mutate } = createStore({ count: 1 })
+const { consume, mutate } = createStore({ count: 1 })
 
 const App = () => (
   <div>
-    <Consumer>{state => <span>{state.count}</span>}</Consumer>
+    <span>{consume(state => state.count)}</span>
     <button onClick={() => mutate(state => state.count--)}>-</button>
     <button onClick={() => mutate(state => state.count++)}>+</button>
   </div>

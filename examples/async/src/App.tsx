@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Consumer, fetchTodo } from './todoStore'
+import { consume, fetchTodo } from './todoStore'
 
 class App extends React.Component {
   componentDidMount() {
@@ -9,9 +9,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <h3>Current Todo Item: </h3>
-        <Consumer>
-          {state => <pre>{JSON.stringify(state.currentItem, null, 2)}</pre>}
-        </Consumer>
+        {consume(state => (
+          <pre>{JSON.stringify(state, null, 2)}</pre>
+        ))}
         <button onClick={() => fetchTodo(2)}>Get New Todo Item</button>
       </div>
     )

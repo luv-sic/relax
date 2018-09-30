@@ -9,6 +9,8 @@
     "README.md"
   ],
   "scripts": {
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
     "clean:dist": "rimraf dist/*",
     "min": "terser dist/index.js -o dist/index.min.js",
     "build": "npm run clean:dist && rollup -c && npm run min",
@@ -57,14 +59,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/forsigner/stamen.git"
+    "url": "git+ssh://git@github.com/forsigner/stamen.git"
   },
   "author": "forsigner",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/forsigner/stamen/issues"
+    "url": "https://.com/forsigner/stamen/issues"
   },
-  "homepage": "https://gitlab.com/forsigner/stamen#README",
+  "homepage": "https://github.com/forsigner/stamen#README",
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
@@ -74,6 +76,7 @@
     "@types/react-dom": "^16.0.7",
     "@types/react-test-renderer": "^16.0.2",
     "coveralls": "^3.0.2",
+    "docz": "^0.12.4",
     "husky": "^0.14.3",
     "jest": "^23.6.0",
     "lint-staged": "^7.2.2",
