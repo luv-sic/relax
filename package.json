@@ -9,8 +9,6 @@
     "README.md"
   ],
   "scripts": {
-    "docz:dev": "docz dev",
-    "docz:build": "docz build",
     "clean:dist": "rimraf dist/*",
     "min": "terser dist/index.js -o dist/index.min.js",
     "build": "npm run clean:dist && rollup -c && npm run min",
@@ -24,6 +22,8 @@
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "precommit": "lint-staged",
     "commitmsg": "commitlint -E GIT_PARAMS",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
     "release": "standard-version"
   },
   "jest": {
@@ -101,6 +101,7 @@
     "react-dom": "^16.5.2"
   },
   "dependencies": {
+    "fast-deep-equal": "^2.0.1",
     "immer": "^1.7.2"
   }
 }

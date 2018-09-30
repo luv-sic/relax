@@ -1,50 +1,38 @@
 import * as React from 'react'
 import produce from 'immer'
-import { ConsumerProps, MutateFn, Updater } from './typings'
+import equal from 'fast-deep-equal'
+import { ConsumerProps, MutateFn } from './typings'
 export { createStore, ConsumerProps }
 
-function createStore<T = any>(state: T) {
-  const updaters: Array<Updater<T>> = []
-  let nextState: any = state
-  const Consumer = class extends React.Component<ConsumerProps<T>> {
-    state: T = state
-    componentDidMount() {
-      updaters.push(this.update)
-    }
-    update = (fn: MutateFn<T>) => {
+function createStore<T>(initialState: T) {
+  const updaters: Array<(fn: MutateFn<T>) => void> = []
+  let newState: any = initialState
+  const Box = class extends React.Component<ConsumerProps<T>> {
+    state: T = initialState
+    update = (fn: MutateFn<T>) =>
       this.setState(currentState => {
-        nextState = produce(currentState, (draft: T) => {
+        return (newState = produce(currentState, (draft: T) => {
           fn(draft)
-        })
-        return nextState
+        }))
       })
+    shouldComponentUpdate = (_: ConsumerProps<T>, nextState: T) => {
+      const selector = this.props.selector ? this.props.selector : (s: T) => s
+      return !equal(selector(this.state), selector(nextState))
     }
-    componentWillUnmount() {
-      const index = updaters.indexOf(this.update)
-      updaters.splice(index, 1)
-    }
-    render() {
-      return this.props.children(this.state)
-    }
+    componentDidMount = () => updaters.push(this.update)
+    componentWillUnmount = () =>
+      updaters.splice(updaters.indexOf(this.update), 1)
+    render = () => this.props.children(this.state)
   }
-
   return {
-    consume<S>(
-      selector: (state: T) => S,
-      renderFn?: (partialState: S) => React.ReactNode,
+    consume<P>(
+      selector: (state: T) => P,
+      renderFn?: (partialState: P) => React.ReactNode,
     ) {
-      if (!renderFn) {
-        return <Consumer>{selector}</Consumer>
-      }
-      return (
-        <Consumer selected={selector(state)}>
-          {(store: T) => renderFn(selector(store))}
-        </Consumer>
-      )
+      if (!renderFn) return <Box>{selector}</Box>
+      return <Box selector={selector}>{(s: T) => renderFn(selector(s))}</Box>
     },
-    mutate(fn: MutateFn<T>): void {
-      updaters.forEach(update => update(fn))
-    },
-    getState: (): T | any => nextState,
+    mutate: (fn: MutateFn<T>): void => updaters.forEach(update => update(fn)),
+    getState: (): T => newState,
   }
 }

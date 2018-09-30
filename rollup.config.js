@@ -18,7 +18,7 @@ export default {
       sourcemap: true,
     },
   ],
-  external: ['immer', 'react', 'react-dom'],
+  external: ['immer', 'fast-deep-equal', 'react', 'react-dom'],
   plugins: [
     typescript({
       rollupCommonJSResolveHack: true,
