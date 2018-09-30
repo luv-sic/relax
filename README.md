@@ -8,7 +8,7 @@
 Stamen is an An immutable React state management library.
 
 If you're like me, tire of
-provider, connections, actions, reducers, effects, dispatch, put, call, preload, @observable, @computed, @observer, @inject...
+provider, connections, actions, reducers, effects, dispatch, put, call, payload, @observable, @computed, @observer, @inject...
 
 If you dont't like a lot of boilerplate, concepts, principles, APIs...
 
@@ -18,7 +18,7 @@ You can try `stamen`.
 
 ## Why?
 
-- **Lightweight** less 700B after gzip, no dependences
+- **Lightweight** less 700B after gzip, 40 lines code only
 - **Minimalist** zero boilerplate, minimal api
 - **Intuitive** no complex concept, just state and action
 - **Clear** Easy to write maintainable and readable code
@@ -162,14 +162,11 @@ Yes, it is total type-safety.
 key typings:
 
 ```js
-declare function createStore<T = any>(state: T): {
-  consume<S>(
-    selector: (state: T) => S,
-    renderFn?: ((partialState: S) => React.ReactNode)
-  ): JSX.Element
-  mutate(fn: (draft: T) => void): void
-  getState: () => T
-}
+declare function createStore<T>(state: T): {
+    consume<S>(selector: (state: T) => S, renderFn?: ((partialState: S) => React.ReactNode) | undefined): JSX.Element;
+    mutate: (fn: (draft: T) => void) => void;
+    getState: () => T;
+};
 ```
 
 **Single store or Multiple store?**
