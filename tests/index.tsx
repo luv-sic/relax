@@ -19,7 +19,7 @@ test('No selector', () => {
   component.unmount()
 })
 
-xtest('With selector', () => {
+test('With selector', () => {
   const { consume, mutate, getState } = createStore({
     count: 1,
     name: 'Counter',

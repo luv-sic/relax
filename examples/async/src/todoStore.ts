@@ -10,10 +10,9 @@ const { consume, mutate } = createStore({
 })
 
 export async function fetchTodo(id: number) {
-  const json = await fetch(
-    `https://jsonplaceholder.typicode.com/todos/${id}`,
-  ).then(response => response.json())
-
+  const url = `https://jsonplaceholder.typicode.com/todos/${id}`
+  const json = await fetch(url).then(response => response.json())
+  console.log('this:', this)
   mutate(state => {
     state.currentItem = json
   })

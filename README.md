@@ -36,7 +36,7 @@ You can try `stamen`.
 yarn add stamen
 ```
 
-## Doc
+## Documentation
 
 [English](http://forsigner.com/stamen/#/) | [简体中文](http://forsigner.com/stamen-zh-cn/#/)
 
