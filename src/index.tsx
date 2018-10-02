@@ -5,17 +5,17 @@ import { ConsumerProps, MutateFn } from './typings'
 export { createStore, ConsumerProps }
 
 function createStore<T>(initialState: T) {
-  const updaters: Array<(fn: MutateFn<T>) => void> = []
   let state: any = initialState
+  let update: (fn: MutateFn<T>) => void
   const Box = class extends React.Component<ConsumerProps<T>> {
-    state: T = initialState
-    update = (fn: MutateFn<T>) => this.setState(prevState => (state = produce(prevState, (draft: T) => void fn(draft))))
+    state: T = state
+    update = (fn: MutateFn<T>) =>
+      this.setState(prevState => (state = produce(prevState, (draft: T) => void fn(draft))))
     shouldComponentUpdate = (_: ConsumerProps<T>, nextState: T) => {
       const selector = this.props.selector ? this.props.selector : (s: T) => s
       return !equal(selector(this.state), selector(nextState))
     }
-    componentDidMount = () => updaters.push(this.update)
-    componentWillUnmount = () => updaters.splice(updaters.indexOf(this.update), 1)
+    componentDidMount = () => (update = this.update)
     render = () => this.props.children(this.state)
   }
   return {
@@ -23,7 +23,8 @@ function createStore<T>(initialState: T) {
       if (!renderFn) return <Box>{selector}</Box>
       return <Box selector={selector}>{(s: T) => renderFn(selector(s))}</Box>
     },
-    mutate: (fn: MutateFn<T>): void => updaters.forEach(update => update(fn)),
+    mutate: (fn: MutateFn<T>): void =>
+      update ? update(fn) : (state = produce(state, (draft: T) => void fn(draft))),
     getState: (): T => state,
   }
 }

@@ -16,10 +16,7 @@ const { consume, mutate } = createStore({
 
 const actions = {
   updateName() {
-    mutate(
-      state =>
-        (state.name = 'My name is so long................................'),
-    )
+    mutate(state => (state.name = 'My name is so long................................'))
   },
   reset() {
     mutate(state => (state.name = 'forsigner'))

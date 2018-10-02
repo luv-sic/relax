@@ -5,9 +5,7 @@
 [![npm](https://img.shields.io/npm/v/stamen.svg)](https://www.npmjs.com/package/stamen) ![gzip size](https://img.shields.io/badge/gzip%20size-638%20B-44cc11.svg) [![Build Status](https://travis-ci.org/forsigner/stamen.svg?branch=master)](https://travis-ci.org/forsigner/stamen) [![Coverage Status](https://coveralls.io/repos/github/forsigner/stamen/badge.svg?branch=master)](https://coveralls.io/github/forsigner/stamen?branch=master)
 [![npm](https://img.shields.io/badge/TypeScript-%E2%9C%93-007ACC.svg)](https://www.typescriptlang.org/) [![GitHub license](https://img.shields.io/github/license/forsigner/stamen.svg)](https://github.com/forsigner/stamen/blob/master/LICENSE)
 
-> A sexy state container for React
-
-Stamen is an An immutable react state management library.
+> A sexy immutable React state management library
 
 ## Hey~
 
@@ -126,7 +124,14 @@ const { consume, mutate } = createStore({
 **Using selectors**
 
 ```js
-<span>{consume(state => state.info.name, name => name)}</span>
+<div>
+  {consume(
+    state => state.info.name,
+    name => (
+      <span>{name}</span>
+    ),
+  )}
+</div>
 ```
 
 ### `mutate()`
@@ -168,10 +173,7 @@ key typings:
 declare function createStore<T>(
   state: T,
 ): {
-  consume<S>(
-    selector: (state: T) => S,
-    renderFn?: (partialState: S) => React.ReactNode,
-  ): JSX.Element,
+  consume<S>(selector: (state: T) => S, renderFn?: (partialState: S) => React.ReactNode): JSX.Element,
   mutate: (fn: (draft: T) => void) => void,
   getState: () => T,
 }

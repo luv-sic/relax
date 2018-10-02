@@ -1,6 +1,6 @@
 import { createStore } from 'stamen'
 
-const { consume, mutate } = createStore({ count: 1 })
+const { consume, mutate } = createStore({ count: 1, name: 'Counter' })
 
 const actions = {
   increment() {

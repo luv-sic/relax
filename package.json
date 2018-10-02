@@ -25,28 +25,12 @@
     "release": "standard-version"
   },
   "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "tests/.*\\.tsx$",
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/.history/"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+    "preset": "ts-jest"
   },
   "lint-staged": {
-    "{examples_src,src,tests}/**/*.{js,ts,tsx}": [
+    "{src,tests}/*.{js,ts,tsx}": [
       "npm run format",
       "npm run lint:fix",
-      "npm test",
       "git add"
     ]
   },
