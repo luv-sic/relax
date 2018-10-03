@@ -25,7 +25,12 @@
     "release": "standard-version"
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/examples/",
+      "/.history/"
+    ]
   },
   "lint-staged": {
     "{src,__tests__}/*.{js,ts,tsx}": [
