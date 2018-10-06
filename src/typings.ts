@@ -5,3 +5,4 @@ export interface ConsumerProps<T> {
   selector?: any
 }
 export type MutateFn<T> = (draft: T) => void
+export type Updater<T> = (fn: MutateFn<T>) => void

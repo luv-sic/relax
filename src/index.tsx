@@ -1,12 +1,12 @@
 import * as React from 'react'
 import produce from 'immer'
 import equal from 'fast-deep-equal'
-import { ConsumerProps, MutateFn } from './typings'
+import { ConsumerProps, MutateFn, Updater } from './typings'
 export { createStore, ConsumerProps }
 
 function createStore<T>(initialState: T) {
   let state: any = initialState
-  let update: (fn: MutateFn<T>) => void
+  const updaters: Array<Updater<T>> = []
   const Box = class extends React.Component<ConsumerProps<T>> {
     state: T = state
     update = (fn: MutateFn<T>) =>
@@ -15,7 +15,7 @@ function createStore<T>(initialState: T) {
       const selector = this.props.selector ? this.props.selector : (s: T) => s
       return !equal(selector(this.state), selector(nextState))
     }
-    componentDidMount = () => (update = this.update)
+    componentDidMount = () => updaters.push(this.update)
     render = () => this.props.children(this.state)
   }
   return {
@@ -24,7 +24,9 @@ function createStore<T>(initialState: T) {
       return <Box selector={selector}>{(s: T) => renderFn(selector(s))}</Box>
     },
     mutate: (fn: MutateFn<T>): void =>
-      update ? update(fn) : (state = produce(state, (draft: T) => void fn(draft))),
+      updaters.length
+        ? updaters.forEach((item: Updater<T>) => item(fn))
+        : (state = produce(state, (draft: T) => void fn(draft))),
     getState: (): T => state,
   }
 }
