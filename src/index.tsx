@@ -1,30 +1,78 @@
-import * as React from 'react'
 import produce from 'immer'
-import equal from 'fast-deep-equal'
-import { ConsumerProps, MutateFn } from './typings'
-export { createStore, ConsumerProps }
+import { useState, useEffect } from './react'
+import { Updater, Opt, Reducers, Effects, Selector, reducerFn, ActionSelector } from './typings'
 
-function createStore<T>(initialState: T) {
-  let state: any = initialState
-  let update: (fn: MutateFn<T>) => void
-  const Box = class extends React.Component<ConsumerProps<T>> {
-    state: T = state
-    update = (fn: MutateFn<T>) =>
-      this.setState(prevState => (state = produce(prevState, (draft: T) => void fn(draft))))
-    shouldComponentUpdate = (_: ConsumerProps<T>, nextState: T) => {
-      const selector = this.props.selector ? this.props.selector : (s: T) => s
-      return !equal(selector(this.state), selector(nextState))
+export { createStore }
+
+function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R, E>) {
+  let state: any = opt.state
+  const updaters: Array<Updater<S>> = []
+
+  function putFactory(payload: any) {
+    return function put(actionName: string) {
+      if (!updaters.length) return
+      updaters.forEach(updater => {
+        updater(opt.reducers[actionName], payload)
+      })
     }
-    componentDidMount = () => (update = this.update)
-    render = () => this.props.children(this.state)
   }
-  return {
-    consume<P>(selector: (state: T) => P, renderFn?: (partialState: P) => React.ReactNode) {
-      if (!renderFn) return <Box>{selector}</Box>
-      return <Box selector={selector}>{(s: T) => renderFn(selector(s))}</Box>
-    },
-    mutate: (fn: MutateFn<T>): void =>
-      update ? update(fn) : (state = produce(state, (draft: T) => void fn(draft))),
-    getState: (): T => state,
+
+  function useStore() {
+    const [storeState, setState] = useState(state)
+
+    useMount(() => {
+      updaters.push(update)
+    })
+
+    function update(action: reducerFn<S>, payload: any): any {
+      if (!action) return null
+
+      setState((prevState: any) => {
+        const nextState: S = produce<any>(prevState, (draft: S) => {
+          action(draft, payload)
+        })
+
+        state = nextState
+        return nextState
+      })
+    }
+
+    function get<P>(selector: Selector<S, P>) {
+      return selector(storeState)
+    }
+
+    function dispatch(action: keyof (R & E) | ActionSelector<R, E>, payload?: any) {
+      const actionName = getActoinName(action)
+      if (opt.effects[actionName]) {
+        opt.effects[actionName](putFactory(payload))
+        return
+      }
+      if (!updaters.length) return
+
+      updaters.forEach(updater => {
+        updater(opt.reducers[actionName], payload)
+      })
+    }
+
+    return { get, dispatch }
+  }
+
+  return { useStore }
+}
+
+function useMount(mount: any): void {
+  useEffect(mount, [])
+}
+
+function getActoinName(action: any): string {
+  if (typeof action === 'string') return action
+
+  try {
+    const str = action.toString()
+    const regAction = /return.*\.(.*);/
+    const arr: any = str.match(regAction) || []
+    return arr[1]
+  } catch {
+    throw new Error('action type or selector invalid')
   }
 }

@@ -12,8 +12,7 @@ export interface ConsumerProps<S> {
   selector?: any
 }
 export type MutateFn<T> = (draft: T) => void
-export type Callback = (prev: any, next: any) => void
-export type Updater<S> = (action: reducerFn<S>, payload: any, cb: Callback) => any
+export type Updater<S> = (action: reducerFn<S>, payload: any) => any
 export type ActionSelector<R, E> = (action: R & E) => any
 
 export type ActFn<R> = (action: R, payload?: any) => void

@@ -1,6 +1,6 @@
-import { createStore } from './stamen'
+import { createStore } from 'stamen'
 
-const { consume, dispatch } = createStore({
+const { useStore } = createStore({
   name: 'TodoStore',
   state: {
     count: 10,
@@ -16,18 +16,15 @@ const { consume, dispatch } = createStore({
   },
   effects: {
     async asyncIncrement(put) {
-      await sleep(2000)
+      await sleep(1000)
       put('increment')
     },
     async asyncDecrement(act) {
-      await sleep(2000)
+      await sleep(1000)
       act('decrement', 1)
     },
   },
 })
-
-// actions.decrement()
-// actions.decrement()
 
 function sleep(time: number) {
   return new Promise(resove => {
@@ -37,4 +34,4 @@ function sleep(time: number) {
   })
 }
 
-export { consume, dispatch }
+export { useStore }
