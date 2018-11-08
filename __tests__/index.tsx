@@ -1,42 +1,28 @@
+import * as React from 'react'
 import renderer from 'react-test-renderer'
-import { Store } from '../src'
+import { createStore } from '../src/index'
 
-test('No selector', () => {
-  expect('1').toBe('1')
-  const store = new Store('TodoStore')
-    .initState({
+test('useStore', () => {
+  const { useStore } = createStore({
+    state: {
       count: 1,
       name: 'Counter',
-    })
-    .initActions((mutate: any) => ({
-      increment() {
-        mutate((state: any) => state.count++)
+    },
+    reducers: {
+      increment(state, payload: any = 1) {
+        state.count += payload
       },
-      decrement() {
-        mutate((state: any) => state.count--)
+      decrement(state) {
+        state.count--
       },
-      asyncIncrement() {
-        setTimeout(() => {
-          mutate((state: any) => state.count++)
-        }, 1000)
-      },
-      async asyncDecrement() {
-        await new Promise((resolve, _) => {
-          setTimeout(() => {
-            resolve()
-          }, 1000)
-        })
-        mutate((state: any) => state.count--)
-      },
-    }))
+    },
+  })
+  const App = () => {
+    const { get } = useStore()
+    const count = get(s => s.count)
+    return <React.Fragment>{count}</React.Fragment>
+  }
 
-  const { getState, consume } = store
-  console.log('store:', store)
-  console.log('store.state:', store.actions)
-  console.log('store.actions:', store.actions)
-
-  const component = renderer.create(consume(state => state.count))
-
-  expect(getState()).toEqual({ count: 1, name: 'Counter' })
+  const component = renderer.create(<App />)
   expect(component.toJSON()).toBe('1')
 })
