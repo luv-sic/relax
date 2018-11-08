@@ -5,7 +5,7 @@ import { Updater, Opt, Reducers, Effects, Selector, reducerFn, ActionSelector } 
 export { createStore }
 
 function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R, E>) {
-  let state: any = opt.state
+  const initialState: any = opt.state
   const updaters: Array<Updater<S>> = []
 
   function putFactory() {
@@ -20,7 +20,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
   }
 
   function useStore() {
-    const [storeState, setState] = useState(state)
+    const [state, setState] = useState(initialState)
 
     useMount(() => {
       updaters.push(update)
@@ -34,13 +34,12 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
           action(draft, payload)
         })
 
-        state = nextState
         return nextState
       })
     }
 
     function get<P>(selector: Selector<S, P>) {
-      return selector(storeState)
+      return selector(state)
     }
 
     function dispatch(action: keyof (R & E) | ActionSelector<R, E>, payload?: any) {

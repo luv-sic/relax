@@ -7515,10 +7515,10 @@ stacktrace-js@^2.0.0:
     stack-generator "^2.0.1"
     stacktrace-gps "^3.0.1"
 
-stamen@^1.5.0:
-  version "1.5.0"
-  resolved "http://registry.npm.taobao.org/stamen/download/stamen-1.5.0.tgz#4e1862c2118266007342a38605835248071d930e"
-  integrity sha1-ThhiwhGCZgBzQqOGBYNSSAcdkw4=
+stamen@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/stamen/-/stamen-1.5.1.tgz#04f59148e3f7c8bef8aaf6087bc6b22befe3d1a8"
+  integrity sha512-Niq7+RH/eb/uFY9GkiLAVJ4Cm54/PFs9AJEmP40FXO1G44FbtmAnGQyKo7cKQJHpxmA6T+HZ9aZvGNSB0YLZSQ==
   dependencies:
     immer "^1.7.2"
 
