@@ -4014,20 +4014,20 @@ react-dom@16.7.0-alpha.0:
     prop-types "^15.6.2"
     scheduler "^0.11.0-alpha.0"
 
-react-is@^16.6.1:
-  version "16.6.1"
-  resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.6.1.tgz#f77b1c3d901be300abe8d58645b7a59e794e5982"
-  integrity sha1-93scPZAb4wCr6NWGRbelnnlOWYI=
+react-is@^16.7.0-alpha.0:
+  version "16.7.0-alpha.0"
+  resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.7.0-alpha.0.tgz#0c92b82ba8e3d938a09697ce459d019f059421ed"
+  integrity sha1-DJK4K6jj2TiglpfORZ0BnwWUIe0=
 
-react-test-renderer@^16.5.2:
-  version "16.6.1"
-  resolved "http://registry.npm.taobao.org/react-test-renderer/download/react-test-renderer-16.6.1.tgz#8ea357652be3cf81cbd6b2f686e74ebe67c17b78"
-  integrity sha1-jqNXZSvjz4HL1rL2hudOvmfBe3g=
+react-test-renderer@16.7.0-alpha.0:
+  version "16.7.0-alpha.0"
+  resolved "http://registry.npm.taobao.org/react-test-renderer/download/react-test-renderer-16.7.0-alpha.0.tgz#f60e888621537cf8301fc154e8e98e59fb9c7050"
+  integrity sha1-9g6IhiFTfPgwH8FU6OmOWfuccFA=
   dependencies:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    react-is "^16.6.1"
-    scheduler "^0.11.0"
+    react-is "^16.7.0-alpha.0"
+    scheduler "^0.11.0-alpha.0"
 
 react@16.7.0-alpha.0:
   version "16.7.0-alpha.0"
@@ -4380,7 +4380,7 @@ sax@^1.2.4:
   resolved "http://registry.npm.taobao.org/sax/download/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha1-KBYjTiN4vdxOU1T6tcqold9xANk=
 
-scheduler@^0.11.0, scheduler@^0.11.0-alpha.0:
+scheduler@^0.11.0-alpha.0:
   version "0.11.0"
   resolved "http://registry.npm.taobao.org/scheduler/download/scheduler-0.11.0.tgz#def1f1bfa6550cc57981a87106e65e8aea41a6b5"
   integrity sha1-3vHxv6ZVDMV5gahxBuZeiupBprU=

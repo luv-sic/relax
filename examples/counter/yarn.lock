@@ -3226,6 +3226,11 @@ ignore-walk@^3.0.1:
   dependencies:
     minimatch "^3.0.4"
 
+immer@^1.7.2:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-1.7.4.tgz#b9a833a61cbeee477a3694870b172c590837a963"
+  integrity sha512-mZpvQe9LXc+lg3hhcT/2M6Apej43FSs6hS2Bt4HrQxyI6hVJugukLgH2KdSBL/fIOmahHmQvpWU37BWzFLDp1Q==
+
 import-lazy@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/import-lazy/-/import-lazy-2.1.0.tgz#05698e3d45c88e8d7e9d92cb0584e77f096f3e43"
@@ -6378,6 +6383,13 @@ ssri@^5.2.4:
 stack-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/stack-utils/-/stack-utils-1.0.1.tgz#d4f33ab54e8e38778b0ca5cfd3b3afb12db68620"
+
+stamen@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/stamen/-/stamen-1.5.0.tgz#4e1862c2118266007342a38605835248071d930e"
+  integrity sha512-EqqRrvwjd2tJ2/jQIArv3v2mc5NEcPldv+oSZZ0leTuIZQuUbG3QfivhJnh06NXQQ4QOAIC4ZFH1iTc3OMLqLg==
+  dependencies:
+    immer "^1.7.2"
 
 static-extend@^0.1.1:
   version "0.1.2"

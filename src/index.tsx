@@ -8,11 +8,13 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
   let state: any = opt.state
   const updaters: Array<Updater<S>> = []
 
-  function putFactory(payload: any) {
-    return function put(actionName: string) {
+  function putFactory() {
+    return function put(actionName: string, payload: any) {
       if (!updaters.length) return
       updaters.forEach(updater => {
-        updater(opt.reducers[actionName], payload)
+        if (opt.reducers) {
+          updater(opt.reducers[actionName], payload)
+        }
       })
     }
   }
@@ -43,14 +45,16 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
 
     function dispatch(action: keyof (R & E) | ActionSelector<R, E>, payload?: any) {
       const actionName = getActoinName(action)
-      if (opt.effects[actionName]) {
-        opt.effects[actionName](putFactory(payload))
+      if (opt.effects && opt.effects[actionName]) {
+        opt.effects[actionName](putFactory(), payload)
         return
       }
       if (!updaters.length) return
 
       updaters.forEach(updater => {
-        updater(opt.reducers[actionName], payload)
+        if (opt.reducers) {
+          updater(opt.reducers[actionName], payload)
+        }
       })
     }
 

@@ -1,24 +1,18 @@
 import * as React from 'react'
-import { consume, fetchTodo } from './todoStore'
 
-class App extends React.Component {
-  componentDidMount() {
-    fetchTodo(1)
-  }
+import { useStore } from './todoStore'
 
-  render() {
-    return (
-      <div className="App">
-        <h3>Current Todo Item: </h3>
+const App = () => {
+  const { get, dispatch } = useStore()
+  const currentItem = get(s => s.currentItem)
 
-        {consume(state => (
-          <pre>{JSON.stringify(state, null, 2)}</pre>
-        ))}
-
-        <button onClick={() => fetchTodo(2)}>Get New Todo Item</button>
-      </div>
-    )
-  }
+  return (
+    <div className="App">
+      <h3>Current Todo Item: </h3>
+      <pre>{JSON.stringify(currentItem, null, 2)}</pre>
+      <button onClick={() => dispatch(a => a.fetchTodo, 2)}>Get New Todo Item</button>
+    </div>
+  )
 }
 
 export default App

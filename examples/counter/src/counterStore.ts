@@ -1,4 +1,4 @@
-import { createStore } from 'stamen'
+import { createStore } from './stamen'
 
 const { useStore } = createStore({
   name: 'TodoStore',

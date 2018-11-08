@@ -1,21 +1,27 @@
-import { createStore } from 'stamen'
+import { createStore } from './stamen/index'
 
-const { consume, mutate } = createStore({
-  currentItem: {
-    id: 1,
-    userId: 1,
-    title: 'delectus aut autem',
-    completed: false,
+const { useStore } = createStore({
+  name: 'todoStore',
+  state: {
+    currentItem: {
+      userId: 1,
+      id: 1,
+      title: 'delectus aut autem',
+      completed: false,
+    },
+  },
+  reducers: {
+    updateTodo(state, payload) {
+      state.currentItem = payload
+    },
+  },
+  effects: {
+    async fetchTodo(put, payload) {
+      const url = `https://jsonplaceholder.typicode.com/todos/${payload}`
+      const json = await fetch(url).then(response => response.json())
+      put('updateTodo', json)
+    },
   },
 })
 
-export async function fetchTodo(id: number) {
-  const url = `https://jsonplaceholder.typicode.com/todos/${id}`
-  const json = await fetch(url).then(response => response.json())
-  console.log('this:', this)
-  mutate(state => {
-    state.currentItem = json
-  })
-}
-
-export { mutate, consume }
+export { useStore }

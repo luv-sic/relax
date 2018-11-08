@@ -5,10 +5,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "mobx": "^5.1.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react": "16.7.0-alpha.0",
+    "react-dom": "16.7.0-alpha.0",
     "react-scripts-ts": "2.17.0",
+    "react-use": "^4.9.0",
     "rectx": "^1.3.3",
+    "stamen": "^1.5.0",
     "unstated": "^2.1.1"
   },
   "scripts": {
