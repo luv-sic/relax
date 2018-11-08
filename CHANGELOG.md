@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/forsigner/stamen/compare/v1.4.1...v1.5.0) (2018-11-08)
+
+
+### Features
+
+* new api reducers & effects ([6dbfbbc](https://github.com/forsigner/stamen/commit/6dbfbbc))
+* use react-hook ([83a1c31](https://github.com/forsigner/stamen/commit/83a1c31))
+
+
+
 <a name="1.4.2"></a>
 ## [1.4.2](https://github.com/forsigner/stamen/compare/v1.4.1...v1.4.2) (2018-10-06)
 
