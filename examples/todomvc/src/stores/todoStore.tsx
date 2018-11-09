@@ -23,60 +23,46 @@ const initialState: State = {
   visibilityFilter: SHOW_ALL,
 }
 
-const { consume, mutate } = createStore(initialState)
+const TodoStore = createStore({
+  state: initialState,
+  reducers: {
+    addTodo(state, text: string) {
+      state.todos.push({
+        id: state.todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
+        completed: false,
+        text,
+      })
+    },
+    deleteTodo(state, id: number) {
+      state.todos = state.todos.filter(todo => todo.id !== id)
+    },
 
-export { consume, mutate }
+    editTodo(state, { id, text }) {
+      state.todos = state.todos.map(todo => (todo.id === id ? { ...todo, text } : todo))
+    },
 
-export function addTodo(text: string) {
-  mutate(state => {
-    state.todos.push({
-      id: state.todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-      completed: false,
-      text,
-    })
-  })
-}
+    completeTodo(state, id: number) {
+      state.todos = state.todos.map(todo =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      )
+    },
 
-export function deleteTodo(id: number) {
-  mutate(state => {
-    state.todos = state.todos.filter(todo => todo.id !== id)
-  })
-}
+    completeAllTodos(state) {
+      const areAllMarked = state.todos.every(todo => todo.completed)
+      state.todos = state.todos.map(todo => ({
+        ...todo,
+        completed: !areAllMarked,
+      }))
+    },
 
-export function editTodo(id: number, text: string) {
-  mutate(state => {
-    state.todos = state.todos.map(
-      todo => (todo.id === id ? { ...todo, text } : todo),
-    )
-  })
-}
+    clearCompleted(state) {
+      state.todos = state.todos.filter(todo => todo.completed === false)
+    },
+    setVisibilityFilter(state, filter: string) {
+      state.visibilityFilter = filter
+    },
+  },
+  effects: {},
+})
 
-export function completeTodo(id: number) {
-  mutate(state => {
-    state.todos = state.todos.map(
-      todo => (todo.id === id ? { ...todo, completed: !todo.completed } : todo),
-    )
-  })
-}
-
-export function completeAllTodos() {
-  mutate(state => {
-    const areAllMarked = state.todos.every(todo => todo.completed)
-    state.todos = state.todos.map(todo => ({
-      ...todo,
-      completed: !areAllMarked,
-    }))
-  })
-}
-
-export function clearCompleted() {
-  mutate(state => {
-    state.todos = state.todos.filter(todo => todo.completed === false)
-  })
-}
-
-export function setVisibilityFilter(filter: string) {
-  mutate(state => {
-    state.visibilityFilter = filter
-  })
-}
+export default TodoStore

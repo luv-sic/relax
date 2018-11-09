@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useStore } from './counterStore'
+import { useStore } from '@stores/CounterStore'
 
 const Counter = () => {
   const { get, dispatch } = useStore()
@@ -7,7 +7,6 @@ const Counter = () => {
 
   return (
     <div className="box">
-      <h2>Counter</h2>
       <div style={{ textAlign: 'center' }}>
         <div>{count}</div>
         <button onClick={() => dispatch(a => a.decrement)}>-</button>

@@ -12,33 +12,41 @@ interface State {
   posts: Post[]
 }
 
-const { consume, mutate } = createStore<State>({
+const initialState: State = {
   loading: true,
   posts: [],
-})
-
-const actions = {
-  updateLoading(status: boolean) {
-    mutate(state => {
-      state.loading = false
-    })
-  },
-  updatePosts(posts: Post[]) {
-    mutate(state => {
-      state.posts = posts
-    })
-  },
-  async fetchPost() {
-    const url = 'https://jsonplaceholder.typicode.com/posts?userId=1'
-    const posts = await fetch(url).then(response => response.json())
-
-    // delay for show loading
-    setTimeout(() => {
-      this.updateLoading(false)
-    }, 1500)
-
-    this.updatePosts(posts)
-  },
 }
 
-export { consume, mutate, actions }
+const CounterStore = createStore({
+  state: initialState,
+  reducers: {
+    updateLoading(state, status: boolean) {
+      state.loading = status
+    },
+    updatePosts(state, posts: Post[]) {
+      state.posts = posts
+    },
+  },
+  effects: {
+    async fetchPost(dispatch) {
+      const url = 'https://jsonplaceholder.typicode.com/posts?userId=1'
+      const posts = await fetch(url).then(response => response.json())
+
+      // delay for show loading
+      await sleep(1500)
+
+      dispatch('updateLoading', false)
+      dispatch('updatePosts', posts)
+    },
+  },
+})
+
+function sleep(time: number) {
+  return new Promise(resove => {
+    setTimeout(() => {
+      resove()
+    }, time)
+  })
+}
+
+export default CounterStore

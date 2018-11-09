@@ -1,29 +1,36 @@
 import { createStore } from 'stamen'
 
-const { consume, mutate } = createStore({ count: 1, name: 'Counter' })
+const CounterStore = createStore({
+  state: {
+    count: 10,
+    name: 'Counter',
+  },
+  reducers: {
+    increment(state, payload: any = 1) {
+      state.count += payload
+    },
+    decrement(state) {
+      state.count--
+    },
+  },
+  effects: {
+    async asyncIncrement(dispatch) {
+      await sleep(1000)
+      dispatch('increment')
+    },
+    async asyncDecrement(dispatch) {
+      await sleep(1000)
+      dispatch('decrement', 1)
+    },
+  },
+})
 
-const actions = {
-  increment() {
-    mutate(state => state.count++)
-  },
-  decrement() {
-    mutate(state => state.count--)
-  },
-  asyncIncrement() {
+function sleep(time: number) {
+  return new Promise(resove => {
     setTimeout(() => {
-      mutate(state => {
-        state.count++
-      })
-    }, 1000)
-  },
-  async asyncDecrement() {
-    await new Promise((resolve, _) => {
-      setTimeout(() => {
-        resolve()
-      }, 1000)
-    })
-    mutate(state => state.count--)
-  },
+      resove()
+    }, time)
+  })
 }
 
-export { consume, mutate, actions }
+export default CounterStore

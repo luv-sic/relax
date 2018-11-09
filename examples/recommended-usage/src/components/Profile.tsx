@@ -1,15 +1,18 @@
 import * as React from 'react'
-import { consume, actions } from '@stores/profileStore'
+import ProfileStore from '@stores/ProfileStore'
 
-const Counter = () => (
-  <div className="box profile">
-    <h2>Profile</h2>
-    {consume(state => (
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-    ))}
-    <button onClick={actions.updateName}>update name</button>
-    <button onClick={actions.reset}>restore</button>
-  </div>
-)
+const Counter = () => {
+  const { get, dispatch } = ProfileStore.useStore()
+  const user = get(s => s)
+
+  return (
+    <div className="box profile">
+      <h2>Profile</h2>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <button onClick={() => dispatch(a => a.updateName)}>update name</button>
+      <button onClick={() => dispatch(a => a.reset)}>restore</button>
+    </div>
+  )
+}
 
 export default Counter

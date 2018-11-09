@@ -1,12 +1,13 @@
 import React from 'react'
 import { createStore } from 'stamen'
 
-const { useStore } = createStore({
+const CounterStore = createStore({
   state: {
     count: 10,
   },
   reducers: {
-    increment(state) { state.count++
+    increment(state) {
+      state.count++
     },
     decrement(state) {
       state.count--
@@ -20,13 +21,13 @@ const { useStore } = createStore({
 })
 
 const App = () => {
-  const { get, dispatch } = useStore()
+  const { get, dispatch } = CounterStore.useStore()
   const count = get(s => s.count)
   return (
     <div>
       <span>{count}</span>
-      <button onClick={() => dispatch(a => a.decrement)}>-</button>
-      <button onClick={() => dispatch(a => a.increment)}>+</button>
+      <button onClick={() => dispatch('decrement')}>-</button>
+      <button onClick={() => dispatch('increment')}>+</button>
     </div>
   )
 }

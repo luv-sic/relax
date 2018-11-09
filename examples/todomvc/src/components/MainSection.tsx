@@ -1,34 +1,34 @@
 import * as React from 'react'
 import Footer from './Footer'
 import TodoList from './TodoList'
+import TodoStore from '@stores/TodoStore'
 
-import { consume, completeAllTodos, clearCompleted } from '../stores/todoStore'
+const MainSection = () => {
+  const { get, dispatch } = TodoStore.useStore()
+  const todos = get(s => s.todos)
+  const todosCount = todos.length
+  const completedCount = todos.filter(todo => todo.completed).length
 
-const MainSection = () => (
-  <section className="main">
-    {consume(({ todos }) => {
-      const todosCount = todos.length
-      const completedCount = todos.filter(todo => todo.completed).length
-      return (
-        <React.Fragment>
-          {!!todosCount && (
-            <span>
-              <input className="toggle-all" type="checkbox" />
-              <label onClick={completeAllTodos} />
-            </span>
-          )}
-          <TodoList />
-          {!!todosCount && (
-            <Footer
-              completedCount={completedCount}
-              activeCount={todosCount - completedCount}
-              onClearCompleted={clearCompleted}
-            />
-          )}
-        </React.Fragment>
-      )
-    })}
-  </section>
-)
+  return (
+    <section className="main">
+      <React.Fragment>
+        {!!todosCount && (
+          <span>
+            <input className="toggle-all" type="checkbox" />
+            <label onClick={() => dispatch('completeAllTodos')} />
+          </span>
+        )}
+        <TodoList />
+        {!!todosCount && (
+          <Footer
+            completedCount={completedCount}
+            activeCount={todosCount - completedCount}
+            onClearCompleted={() => dispatch('clearCompleted')}
+          />
+        )}
+      </React.Fragment>
+    </section>
+  )
+}
 
 export default MainSection

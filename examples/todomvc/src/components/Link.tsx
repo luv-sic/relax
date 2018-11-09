@@ -1,6 +1,6 @@
 import * as React from 'react'
 import classnames from 'classnames'
-import { consume, setVisibilityFilter } from '../stores/todoStore'
+import TodoStore from '@stores/TodoStore'
 
 interface LinkProp {
   filter: string
@@ -8,18 +8,20 @@ interface LinkProp {
   children: React.ReactNode
 }
 
-const Link: React.SFC<LinkProp> = ({ active, children, filter }) => (
-  <React.Fragment>
-    {consume(({ visibilityFilter }) => (
+const Link: React.SFC<LinkProp> = ({ active, children, filter }) => {
+  const { get, dispatch } = TodoStore.useStore()
+  const visibilityFilter = get(s => s.visibilityFilter)
+  return (
+    <React.Fragment>
       <a
         className={classnames({ selected: filter === visibilityFilter })}
         style={{ cursor: 'pointer' }}
-        onClick={() => setVisibilityFilter(filter)}
+        onClick={() => dispatch('setVisibilityFilter', filter)}
       >
         {children}
       </a>
-    ))}
-  </React.Fragment>
-)
+    </React.Fragment>
+  )
+}
 
 export default Link

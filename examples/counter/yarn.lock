@@ -6384,10 +6384,10 @@ stack-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/stack-utils/-/stack-utils-1.0.1.tgz#d4f33ab54e8e38778b0ca5cfd3b3afb12db68620"
 
-stamen@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/stamen/-/stamen-1.5.0.tgz#4e1862c2118266007342a38605835248071d930e"
-  integrity sha512-EqqRrvwjd2tJ2/jQIArv3v2mc5NEcPldv+oSZZ0leTuIZQuUbG3QfivhJnh06NXQQ4QOAIC4ZFH1iTc3OMLqLg==
+stamen@1.5.2:
+  version "1.5.2"
+  resolved "http://registry.npm.taobao.org/stamen/download/stamen-1.5.2.tgz#8011b031581c760fa4dc721a94268924bf26ff8b"
+  integrity sha1-gBGwMVgcdg+k3HIalCaJJL8m/4s=
   dependencies:
     immer "^1.7.2"
 

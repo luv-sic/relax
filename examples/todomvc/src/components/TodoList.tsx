@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TodoItem from './TodoItem'
-import { consume, TodoType } from '../stores/todoStore'
+import TodoStore, { TodoType } from '@stores/TodoStore'
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
 
 function getVisibleTodos(todos: TodoType[], visibilityFilter: string) {
@@ -21,19 +21,21 @@ function getVisibleTodos(todos: TodoType[], visibilityFilter: string) {
   return visibleTodos
 }
 
-const TodoList: React.SFC = () => (
-  <ul className="todo-list">
-    {consume(({ todos, visibilityFilter }) => {
-      const visibleTodos = getVisibleTodos(todos, visibilityFilter)
-      return (
-        <React.Fragment>
-          {visibleTodos.map(todo => (
-            <TodoItem key={todo.id} todo={todo} />
-          ))}
-        </React.Fragment>
-      )
-    })}
-  </ul>
-)
+const TodoList: React.SFC = () => {
+  const { get } = TodoStore.useStore()
+  const { todos, visibilityFilter } = get(s => s)
+
+  const visibleTodos = getVisibleTodos(todos, visibilityFilter)
+
+  return (
+    <ul className="todo-list">
+      <React.Fragment>
+        {visibleTodos.map(todo => (
+          <TodoItem key={todo.id} todo={todo} />
+        ))}
+      </React.Fragment>
+    </ul>
+  )
+}
 
 export default TodoList

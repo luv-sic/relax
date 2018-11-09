@@ -6229,10 +6229,10 @@ sshpk@^1.7.0:
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
 
-stamen@^1.5.0:
-  version "1.5.0"
-  resolved "http://registry.npm.taobao.org/stamen/download/stamen-1.5.0.tgz#4e1862c2118266007342a38605835248071d930e"
-  integrity sha1-ThhiwhGCZgBzQqOGBYNSSAcdkw4=
+stamen@1.5.2:
+  version "1.5.2"
+  resolved "http://registry.npm.taobao.org/stamen/download/stamen-1.5.2.tgz#8011b031581c760fa4dc721a94268924bf26ff8b"
+  integrity sha1-gBGwMVgcdg+k3HIalCaJJL8m/4s=
   dependencies:
     immer "^1.7.2"
 

@@ -19,7 +19,8 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "paths": {
-      "stores/*": ["src/stores/*"]
+      "@stores/*": ["src/stores/*"],
+      "@components/*": ["src/components/*"]
     }
   },
   "exclude": [
