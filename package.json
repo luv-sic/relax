@@ -89,6 +89,7 @@
     "react-dom": "16.7.0-alpha.0"
   },
   "dependencies": {
+    "fast-deep-equal": "^2.0.1",
     "immer": "^1.7.2"
   }
 }
