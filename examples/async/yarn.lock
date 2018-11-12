@@ -2012,11 +2012,6 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-context@^0.1.5:
-  version "0.1.6"
-  resolved "http://registry.npm.taobao.org/create-react-context/download/create-react-context-0.1.6.tgz#0f425931d907741127acc6e31acb4f9015dd9fdc"
-  integrity sha1-D0JZMdkHdBEnrMbjGstPkBXdn9w=
-
 cross-spawn@5.1.0, cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "http://registry.npm.taobao.org/cross-spawn/download/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -5289,11 +5284,6 @@ mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mobx@^5.1.2:
-  version "5.6.0"
-  resolved "http://registry.npm.taobao.org/mobx/download/mobx-5.6.0.tgz#e381c357e0ed7685a99a896455ecc66ff5ab84ee"
-  integrity sha1-44HDV+DtdoWpmolkVezGb/WrhO4=
-
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/move-concurrently/download/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -6706,14 +6696,6 @@ rebound@^0.1.0:
   resolved "http://registry.npm.taobao.org/rebound/download/rebound-0.1.0.tgz#0638c61a93666bb515a58a03e1cfb34021e88b72"
   integrity sha1-BjjGGpNma7UVpYoD4c+zQCHoi3I=
 
-rectx@^1.3.3:
-  version "1.3.3"
-  resolved "http://registry.npm.taobao.org/rectx/download/rectx-1.3.3.tgz#d4d7d55d096e257bd84898273d6268dc72eed61e"
-  integrity sha1-1NfVXQluJXvYSJgnPWJo3HLu1h4=
-  dependencies:
-    fast-deep-equal "^2.0.1"
-    immer "^1.7.2"
-
 recursive-readdir@2.2.1:
   version "2.2.1"
   resolved "http://registry.npm.taobao.org/recursive-readdir/download/recursive-readdir-2.2.1.tgz#90ef231d0778c5ce093c9a48d74e5c5422d13a99"
@@ -7515,11 +7497,12 @@ stacktrace-js@^2.0.0:
     stack-generator "^2.0.1"
     stacktrace-gps "^3.0.1"
 
-stamen@1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/stamen/-/stamen-1.5.2.tgz#8011b031581c760fa4dc721a94268924bf26ff8b"
-  integrity sha512-7BS0dVyx4J2CS6flD/2HRBNiV6xC9VQ8DpFXsZytaACEkcvkvAhuEBSC7KeA7rO5sL3OquPZAWCBpyrbHVaLKg==
+stamen@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/stamen/-/stamen-1.5.3.tgz#243d0351fbb1cddb7aa1a1bf24bbced24efdbb03"
+  integrity sha512-cpUkNHnYNyYe3UcsWMSgn7lj/KG8Fo8ryAzrMWhyZf8bjr8nSfJVchVo683pKA2/rns80mx6TA7dzghjBpA+fw==
   dependencies:
+    fast-deep-equal "^2.0.1"
     immer "^1.7.2"
 
 static-extend@^0.1.1:
@@ -8184,13 +8167,6 @@ unset-value@^1.0.0:
   dependencies:
     has-value "^0.3.1"
     isobject "^3.0.0"
-
-unstated@^2.1.1:
-  version "2.1.1"
-  resolved "http://registry.npm.taobao.org/unstated/download/unstated-2.1.1.tgz#36b124dfb2e7a12d39d0bb9c46dfb6e51276e3a2"
-  integrity sha1-NrEk37LnoS050LucRt+25RJ246I=
-  dependencies:
-    create-react-context "^0.1.5"
 
 unzip-response@^2.0.1:
   version "2.0.1"

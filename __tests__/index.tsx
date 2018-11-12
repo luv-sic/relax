@@ -16,10 +16,21 @@ test('useStore', () => {
         state.count--
       },
     },
+    effects: {
+      async asyncIncrement(dispatch) {
+        await new Promise(resolve => {
+          setTimeout(() => {
+            resolve()
+          }, 1000)
+        })
+        dispatch('increment')
+      },
+    },
   })
   const App = () => {
     const { get } = useStore()
     const count = get(s => s.count)
+
     return <React.Fragment>{count}</React.Fragment>
   }
 
