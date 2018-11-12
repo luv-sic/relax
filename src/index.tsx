@@ -1,58 +1,67 @@
 import produce from 'immer'
+import equal from 'fast-deep-equal'
 import { useState, useEffect } from './react'
-import { Updater, Opt, Reducers, Effects, Selector, reducerFn, ActionSelector } from './typings'
+import { Opt, Reducers, Effects, Selector, ReducerFn, ActionSelector, Updater } from './typings'
 
 export { createStore }
 
 function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R, E>) {
-  const initialState: any = opt.state
+  let initialState: any = opt.state
   const updaters: Array<Updater<S>> = []
 
-  function putFactory() {
+  function effectDispatchFactory() {
     return function put(actionName: string, payload: any) {
       if (!updaters.length) return
       updaters.forEach(updater => {
         if (opt.reducers) {
-          updater(opt.reducers[actionName], payload)
+          updater.update(updater.set, opt.reducers[actionName], payload)
         }
       })
     }
   }
 
   function useStore() {
-    const [state, setState] = useState(initialState)
+    function get<P>(selector: Selector<S, P>) {
+      const [state, setState] = useState(initialState)
 
-    useMount(() => {
-      updaters.push(update)
-    })
+      useMount(() => {
+        updaters.push({
+          update,
+          set: setState,
+        })
+      })
 
-    function update(action: reducerFn<S>, payload: any): any {
-      if (!action) return null
+      function update(set: any, action: ReducerFn<S>, payload: any): any {
+        if (!action) return null
 
-      setState((prevState: any) => {
-        const nextState: S = produce<any>(prevState, (draft: S) => {
+        const nextState: S = produce<any>(initialState, (draft: S) => {
           action(draft, payload)
         })
 
-        return nextState
-      })
-    }
+        if (equal(selector(initialState), selector(nextState))) {
+          return
+        }
 
-    function get<P>(selector: Selector<S, P>) {
+        set(() => {
+          initialState = nextState
+          return nextState
+        })
+      }
+
       return selector(state)
     }
 
     function dispatch(action: keyof (R & E) | ActionSelector<R, E>, payload?: any) {
       const actionName = getActoinName(action)
       if (opt.effects && opt.effects[actionName]) {
-        opt.effects[actionName](putFactory(), payload)
+        opt.effects[actionName](effectDispatchFactory(), payload)
         return
       }
       if (!updaters.length) return
 
       updaters.forEach(updater => {
         if (opt.reducers) {
-          updater(opt.reducers[actionName], payload)
+          updater.update(updater.set, opt.reducers[actionName], payload)
         }
       })
     }
