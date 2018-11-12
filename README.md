@@ -171,6 +171,8 @@ const SomeStore = createStore({
 
 ### get
 
+Get state in view using react hooks api.
+
 ```js
 const App = () => {
   const { get } = CounterStore.useStore()
@@ -180,6 +182,8 @@ const App = () => {
 ```
 
 ### dispatch
+
+Dispatch an Action to update state.
 
 ```js
 const App = () => {
