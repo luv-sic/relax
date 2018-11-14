@@ -57,7 +57,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     }
 
     function dispatch(action: keyof (R & E) | ActionSelector<R, E>, payload?: any) {
-      const actionName = getActoinName(action)
+      const actionName = getActionName(action)
       if (opt.effects && opt.effects[actionName]) {
         opt.effects[actionName](effectDispatchFactory(), payload)
         return
@@ -90,7 +90,7 @@ const useUnmount = (unmount: any) => {
   )
 }
 
-function getActoinName(action: any): string {
+function getActionName(action: any): string {
   if (typeof action === 'string') return action
 
   try {
