@@ -214,7 +214,7 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react-test-renderer@^16.0.2":
+"@types/react-test-renderer@^16.0.3":
   version "16.0.3"
   resolved "http://registry.npm.taobao.org/@types/react-test-renderer/download/@types/react-test-renderer-16.0.3.tgz#cce5c983d66cc5c3582e7c2f44b274ab635a8acc"
   integrity sha1-zOXJg9ZsxcNYLnwvRLJ0q2Naisw=
@@ -4023,9 +4023,9 @@ react-dom@^16.7.0-alpha.0:
     scheduler "^0.11.0-alpha.0"
 
 react-is@^16.7.0-alpha.0:
-  version "16.7.0-alpha.0"
-  resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.7.0-alpha.0.tgz#0c92b82ba8e3d938a09697ce459d019f059421ed"
-  integrity sha1-DJK4K6jj2TiglpfORZ0BnwWUIe0=
+  version "16.7.0-alpha.2"
+  resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.7.0-alpha.2.tgz#0dd7f95d45ad5318b7f7bcb99dcb84da9385cb57"
+  integrity sha1-Ddf5XUWtUxi397y5ncuE2pOFy1c=
 
 react-test-renderer@16.7.0-alpha.0:
   version "16.7.0-alpha.0"
