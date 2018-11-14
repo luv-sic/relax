@@ -1,6 +1,6 @@
+import { useState, useEffect } from 'react'
 import produce from 'immer'
 import equal from 'fast-deep-equal'
-import { useState, useEffect } from './react'
 import { Opt, Reducers, Effects, Selector, ReducerFn, ActionSelector, Updater } from './typings'
 
 export { createStore }
@@ -23,12 +23,17 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
   function useStore() {
     function get<P>(selector: Selector<S, P>) {
       const [state, setState] = useState(initialState)
+      const updater = {
+        update,
+        set: setState,
+      }
 
       useMount(() => {
-        updaters.push({
-          update,
-          set: setState,
-        })
+        updaters.push(updater)
+      })
+
+      useUnmount(() => {
+        updaters.splice(updaters.indexOf(updater), 1)
       })
 
       function update(set: any, action: ReducerFn<S>, payload: any): any {
@@ -74,6 +79,15 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
 
 function useMount(mount: any): void {
   useEffect(mount, [])
+}
+
+const useUnmount = (unmount: any) => {
+  useEffect(
+    () => () => {
+      if (unmount) unmount()
+    },
+    [],
+  )
 }
 
 function getActoinName(action: any): string {
