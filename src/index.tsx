@@ -6,7 +6,7 @@ import { Opt, Reducers, Effects, Selector, ReducerFn, ActionSelector, Updater } 
 export { createStore }
 
 function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R, E>) {
-  let initialState: any = opt.state
+  let storeState: S = opt.state
   const updaters: Array<Updater<S>> = []
 
   function effectDispatchFactory() {
@@ -22,7 +22,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
 
   function useStore() {
     function get<P>(selector: Selector<S, P>) {
-      const [state, setState] = useState(initialState)
+      const [state, setState] = useState(storeState)
       const updater = {
         update,
         set: setState,
@@ -39,16 +39,16 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
       function update(set: any, action: ReducerFn<S>, payload: any): any {
         if (!action) return null
 
-        const nextState: S = produce<any>(initialState, (draft: S) => {
+        const nextState: S = produce<any>(storeState, (draft: S) => {
           action(draft, payload)
         })
 
-        if (equal(selector(initialState), selector(nextState))) {
+        if (equal(selector(storeState), selector(nextState))) {
           return
         }
 
         set(() => {
-          initialState = nextState
+          storeState = nextState
           return nextState
         })
       }
