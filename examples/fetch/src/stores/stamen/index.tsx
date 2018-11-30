@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
-import { request } from 'graphql-request'
-import crossFetch from 'cross-fetch'
+import { useState } from 'react'
 
 import produce from 'immer'
 import equal from 'fast-deep-equal'
+
+import { Client } from 'gery'
+import { useMount, useUnmount, getActionName } from './util'
 import {
   Opt,
+  Graphqls,
   Reducers,
   Effects,
   Selector,
@@ -13,191 +15,121 @@ import {
   ActionSelector,
   Updater,
   Result,
+  QueryParams,
+  Config,
 } from './typings'
 
-export { createStore, Result }
-
-interface FetchParams {
-  url: string
-  stateKey: string
-  type?: string
+let config: Config = {
+  graphql: {
+    endpoint: '',
+    headers: {},
+  },
 }
 
-interface QueryParams {
-  query: string
-  stateKey: string
-  variable?: object
+const stamen = {
+  init: (initConfig: Config) => {
+    config = initConfig
+  },
 }
 
-function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R, E>) {
+function createStore<S, G extends Graphqls, R extends Reducers<S>, E extends Effects>(
+  opt: Opt<S, G, R, E>,
+) {
   let storeState: S = opt.state
   const updaters: Array<Updater<S>> = []
 
-  function effectDispatchFactory() {
-    return function put(actionName: string, payload: any) {
-      if (!updaters.length) return
-      updaters.forEach(updater => {
-        if (opt.reducers) {
-          updater.update(updater.set, opt.reducers[actionName], payload)
-        }
+  let graphqls: G
+  if (opt.graphqls) {
+    graphqls = opt.graphqls
+  }
+
+  function useStore<P>(selector: Selector<S, P>) {
+    const [state, setState] = useState(storeState)
+    const updater = {
+      update,
+      set: setState,
+    }
+
+    useMount(() => {
+      updaters.push(updater)
+    })
+
+    useUnmount(() => {
+      updaters.splice(updaters.indexOf(updater), 1)
+    })
+
+    function update(set: any, action: ReducerFn<S>, payload: any): any {
+      if (!action) return null
+
+      const nextState: S = produce<any>(storeState, (draft: S) => {
+        action(draft, payload)
       })
+
+      // prevent re-render
+      if (equal(selector(storeState), selector(nextState))) return
+
+      set(() => {
+        storeState = nextState
+        return nextState
+      })
+    }
+
+    return selector(state)
+  }
+
+  function dispatch<K extends any>(action: keyof (R & E) | ActionSelector<R, E>, payload?: K) {
+    const actionName = getActionName(action)
+    if (opt.effects && opt.effects[actionName]) {
+      return opt.effects[actionName](payload)
+    }
+    if (!updaters.length) return
+
+    updaters.forEach(updater => {
+      if (opt.reducers) {
+        updater.update(updater.set, opt.reducers[actionName], payload)
+      }
+    })
+  }
+
+  function mutate(result: Result<any>, stateKey: string) {
+    const { loading, data, error } = result
+    updaters.forEach(updater => {
+      const nextState: S = produce<any>(storeState, (draft: S) => {
+        draft[stateKey] = { loading, data, error }
+      })
+
+      updater.set(() => {
+        storeState = nextState
+        return nextState
+      })
+    })
+  }
+
+  function updateQueryStatus(stateKey: string, loading: boolean, data?: any, error?: any) {
+    mutate({ loading, data, error }, stateKey)
+  }
+
+  async function query(graphqlSelector: (graphqls: G) => any, params: QueryParams) {
+    const { stateKey, variables } = params
+    const { endpoint, headers } = config.graphql
+    const client = new Client(endpoint, { headers })
+    const key = stateKey || 'TODO' // TODO: 默认值
+
+    updateQueryStatus(key, true)
+
+    try {
+      const data = await client.query(graphqlSelector(graphqls), variables)
+      updateQueryStatus(key, false, data)
+      return data
+    } catch (error) {
+      updateQueryStatus(key, false, undefined, error)
+
+      throw new Error(error) // TODO: message
     }
   }
 
-  function useStore() {
-    function get<P>(selector: Selector<S, P>) {
-      const [state, setState] = useState(storeState)
-      const updater = {
-        update,
-        set: setState,
-      }
-
-      useMount(() => {
-        updaters.push(updater)
-      })
-
-      useUnmount(() => {
-        updaters.splice(updaters.indexOf(updater), 1)
-      })
-
-      function update(set: any, action: ReducerFn<S>, payload: any): any {
-        if (!action) return null
-
-        const nextState: S = produce<any>(storeState, (draft: S) => {
-          action(draft, payload)
-        })
-
-        if (equal(selector(storeState), selector(nextState))) {
-          return
-        }
-
-        set(() => {
-          storeState = nextState
-          return nextState
-        })
-      }
-
-      return selector(state)
-    }
-
-    function dispatch(action: keyof (R & E) | ActionSelector<R, E>, payload?: any) {
-      const actionName = getActionName(action)
-      if (opt.effects && opt.effects[actionName]) {
-        opt.effects[actionName](effectDispatchFactory(), payload)
-        return
-      }
-      if (!updaters.length) return
-
-      updaters.forEach(updater => {
-        if (opt.reducers) {
-          updater.update(updater.set, opt.reducers[actionName], payload)
-        }
-      })
-    }
-
-    function setData(result: Result<any>, stateKey: string) {
-      const { loading, data, error } = result
-      updaters.forEach(updater => {
-        const nextState: S = produce<any>(storeState, (draft: S) => {
-          draft[stateKey] = { loading, data, error }
-        })
-
-        updater.set(() => {
-          storeState = nextState
-          return nextState
-        })
-      })
-    }
-
-    function fetch(params: FetchParams) {
-      const { url, stateKey } = params
-
-        // init
-      ;(async () => {
-        await ajax()
-      })()
-
-      async function ajax() {
-        setData(
-          {
-            loading: true,
-            data: null,
-            error: null,
-          },
-          stateKey,
-        )
-        try {
-          const res = await crossFetch(url)
-          const data = await res.json()
-          setData(
-            {
-              loading: false,
-              data,
-              error: null,
-            },
-            stateKey,
-          )
-
-          console.log('data:', data)
-        } catch (err) {
-          console.error(err)
-        }
-      }
-    }
-
-    function query(params: QueryParams) {
-      const { query: querySchema, stateKey } = params
-      const endPoint = 'https://api.graph.cool/simple/v1/movies'
-
-      setData(
-        {
-          loading: true,
-          data: null,
-          error: null,
-        },
-        stateKey,
-      )
-      request(endPoint, querySchema).then(data => {
-        console.log('data:', data)
-        setData(
-          {
-            loading: false,
-            data,
-            error: null,
-          },
-          stateKey,
-        )
-      })
-    }
-
-    return { get, dispatch, fetch, query }
-  }
-
-  return { useStore }
+  return { useStore, dispatch, query }
 }
 
-function useMount(mount: any): void {
-  useEffect(mount, [])
-}
-
-const useUnmount = (unmount: any) => {
-  useEffect(
-    () => () => {
-      if (unmount) unmount()
-    },
-    [],
-  )
-}
-
-function getActionName(action: any): string {
-  if (typeof action === 'string') return action
-
-  try {
-    const str = action.toString()
-    const regAction = /return.*\.(.*);/
-    const arr: any = str.match(regAction) || []
-    return arr[1]
-  } catch {
-    throw new Error('action type or selector invalid')
-  }
-}
+export default stamen
+export { createStore, Result }

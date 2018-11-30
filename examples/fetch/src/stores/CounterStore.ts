@@ -1,12 +1,12 @@
 import { createStore } from './stamen'
 
-const CounterStore = createStore({
+const { useStore, dispatch, query } = createStore({
   state: {
     count: 10,
     name: 'Counter',
   },
   reducers: {
-    increment(state, payload: any = 1) {
+    increment(state, payload: number = 1) {
       state.count += payload
     },
     decrement(state) {
@@ -14,11 +14,11 @@ const CounterStore = createStore({
     },
   },
   effects: {
-    async asyncIncrement(dispatch) {
+    async asyncIncrement() {
       await sleep(1000)
       dispatch('increment')
     },
-    async asyncDecrement(dispatch) {
+    async asyncDecrement() {
       await sleep(1000)
       dispatch('decrement', 1)
     },
@@ -33,4 +33,5 @@ function sleep(time: number) {
   })
 }
 
-export default CounterStore
+export default { useStore, dispatch, query }
+export { useStore, dispatch, query }

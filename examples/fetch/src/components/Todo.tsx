@@ -1,45 +1,58 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useMount } from 'react-use'
 
-import TodoStore from '@stores/TodoStore'
-import CounterStore from '@stores/CounterStore'
+import todoStore from '@stores/todoStore'
+import counterStore from '@stores/counterStore'
+
+const Count = () => {
+  const { useStore, dispatch } = counterStore
+  const count = useStore(s => s.count)
+  useEffect(() => {
+    dispatch('increment', 1)
+  }, [])
+  return <div>{count}</div>
+}
+
+const TodoItem = () => {
+  const { useStore } = todoStore
+  const { loading, data, error } = useStore(s => s.todo)
+
+  if (loading) return <div>loading...</div>
+
+  if (error) {
+    return (
+      <div>
+        <div>error!</div>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  )
+}
 
 const Todo = () => {
-  const todoStore = TodoStore.useStore()
-  const counterStore = CounterStore.useStore()
-
-  const todo = todoStore.get(s => s.todo)
-  const count = counterStore.get(s => s.count)
-
-  const query = /* GraphQL */ `
-    {
-      Movie(title: "Inception") {
-        releaseDate
-        actors {
-          name
-        }
-      }
+  useMount(async () => {
+    try {
+      await todoStore.query(g => g.getMovie, {
+        variables: {
+          title: 'Inception',
+        },
+        stateKey: 'todo',
+      })
+    } catch (error) {
+      console.log(error)
     }
-  `
-
-  React.useEffect(() => {
-    // todoStore.dispatch(actions => actions.fetchTodo, 6)
-    // const url = `https://jsonplaceholder.typicode.com/todos/6`
-    // todoStore.fetch({ url, stateKey: 'todo' })
-    todoStore.query({ query, stateKey: 'todo' })
-    console.log('mounted....')
-  }, [])
-
-  console.log('render......')
+  })
 
   return (
     <div className="App">
+      <Count />
       <h3>Current Todo Item: </h3>
-      <div>{count}</div>
-
-      {todo.loading && <div>loading...</div>}
-
-      {!todo.loading && <pre>{JSON.stringify(todo.data, null, 2)}</pre>}
-
+      <TodoItem />
       <button onClick={() => todoStore.dispatch(a => a.fetchTodo, 2)}>Get New Todo Item</button>
     </div>
   )

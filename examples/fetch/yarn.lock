@@ -2035,6 +2035,14 @@ cross-fetch@2.2.2:
     node-fetch "2.1.2"
     whatwg-fetch "2.0.4"
 
+cross-fetch@^2.2.3:
+  version "2.2.3"
+  resolved "http://registry.npm.taobao.org/cross-fetch/download/cross-fetch-2.2.3.tgz#e8a0b3c54598136e037f8650f8e823ccdfac198e"
+  integrity sha1-6KCzxUWYE24Df4ZQ+OgjzN+sGY4=
+  dependencies:
+    node-fetch "2.1.2"
+    whatwg-fetch "2.0.4"
+
 cross-spawn@5.1.0, cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "http://registry.npm.taobao.org/cross-spawn/download/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -3319,6 +3327,13 @@ gauge@~2.7.3:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
+
+gery@^1.0.3:
+  version "1.0.3"
+  resolved "http://registry.npm.taobao.org/gery/download/gery-1.0.3.tgz#56eab7cead693b74c1f745c239e31980a5d8d1d2"
+  integrity sha1-Vuq3zq1pO3TB90XCOeMZgKXY0dI=
+  dependencies:
+    cross-fetch "^2.2.3"
 
 get-caller-file@^1.0.1:
   version "1.0.3"

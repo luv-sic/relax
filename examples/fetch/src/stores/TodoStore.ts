@@ -1,3 +1,4 @@
+import { gql } from 'gery'
 // import { createStore } from 'stamen'
 import { createStore, Result } from './stamen'
 
@@ -20,12 +21,19 @@ const initialState: State = {
   },
 }
 
-const todoStore = createStore({
-  name: 'todoStore',
+const { useStore, dispatch, query } = createStore({
   state: initialState,
-  endpoint: {
-    graphql: '',
-    rest: '',
+  graphqls: {
+    getMovie: gql`
+      query getMovie($title: String) {
+        Movie(title: $title) {
+          releaseDate
+          actors {
+            name
+          }
+        }
+      }
+    `,
   },
   reducers: {
     updateTodo(state, payload) {
@@ -33,8 +41,16 @@ const todoStore = createStore({
     },
   },
   effects: {
-    async fetchTodo(dispatch, payload) {
-      dispatch('updateTodo', {
+    async fetchTodo(payload) {
+      const r = await query(g => g.getMovie, {
+        variables: {
+          title: 'Inception',
+        },
+      })
+
+      console.log('r:', r)
+
+      dispatch(a => a.updateTodo, {
         loading: true,
         data: {},
       })
@@ -50,4 +66,5 @@ const todoStore = createStore({
   },
 })
 
-export default todoStore
+export default { useStore, dispatch, query }
+export { useStore, dispatch, query }
