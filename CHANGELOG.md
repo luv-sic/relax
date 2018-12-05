@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/forsigner/stamen/compare/v1.5.3...v1.6.0) (2018-12-05)
+
+
+### Bug Fixes
+
+* fix typo ([b567363](https://github.com/forsigner/stamen/commit/b567363))
+
+
+### Features
+
+* support graphql ([b791e15](https://github.com/forsigner/stamen/commit/b791e15))
+
+
+
 <a name="1.5.3"></a>
 ## [1.5.3](https://github.com/forsigner/stamen/compare/v1.5.2...v1.5.3) (2018-11-12)
 
