@@ -20,7 +20,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'stamen'
 
-const CounterStore = createStore({
+const counterStore = createStore({
   state: {
     count: 10,
   },
@@ -33,20 +33,20 @@ const CounterStore = createStore({
     },
   },
   effects: {
-    async asyncIncrement(dispatch) {
+    async asyncIncrement() {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve()
         }, 1000)
       })
-      dispatch('increment')
+      counterStore.dispatch('increment')
     },
   },
 })
 
 const App = () => {
-  const { get, dispatch } = CounterStore.useStore()
-  const count = get(s => s.count)
+  const { useStore, dispatch } = counterStore
+  const count = useStore(S => S.count)
   return (
     <div>
       <span>{count}</span>
@@ -76,7 +76,7 @@ Stamen is simple, only two step to setup it.
 Step 1: creat a store
 
 ```js
-const CounterStore = createStore({
+const counterStore = createStore({
   state: {
     count: 10,
   },
@@ -95,8 +95,8 @@ Step 1: use it in view
 
 ```js
 const App = () => {
-  const { get, dispatch } = CounterStore.useStore()
-  const count = get(s => s.count)
+  const { useStore, dispatch } = counterStore
+  const count = useStore(S => S.count)
   return (
     <div>
       <span>{count}</span>
@@ -114,13 +114,13 @@ That's it!
 **Overview**
 
 ```js
-const SomeStore = createStore({
+const someStore = createStore({
   state: {},
   reducers: {},
   affects: {},
 })
 
-const { get, dispatch } = SomeStore.useStore()
+const { useStore, dispatch } = someStore
 ```
 
 ### state
@@ -128,7 +128,7 @@ const { get, dispatch } = SomeStore.useStore()
 The initial state of a Store.
 
 ```js
-const SomeStore = createStore({
+const someStore = createStore({
   state: {
     count: 0,
   },
@@ -137,11 +137,10 @@ const SomeStore = createStore({
 
 ### reducers
 
-Two type action in Stamen: reducers and effects, you can update state in reducers only. 
-
+Two type action in Stamen: reducers and effects, you can update state in reducers only.
 
 ```js
-const SomeStore = createStore({
+const someStore = createStore({
   reducers: {
     increment(state, payload) {
       state.count += payload
@@ -155,28 +154,28 @@ const SomeStore = createStore({
 You can handle async actions in effects. Such as Fecthing data via nenwork
 
 ```js
-const SomeStore = createStore({
+const someStore = createStore({
   effects: {
-    async asyncIncrement(dispatch) {
+    async asyncIncrement() {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve()
         }, 1000)
       })
-      dispatch('increment')
+      someStore.dispatch('increment')
     },
   },
 })
 ```
 
-### get
+### useStore
 
 Get state in view using react hooks api.
 
 ```js
 const App = () => {
-  const { get } = CounterStore.useStore()
-  const count = get(s => s.count)
+  const { useStore } = counterStore
+  const count = useStore(S => S.count)
   return <span>{count}</span>
 }
 ```
@@ -187,8 +186,8 @@ Dispatch an Action to update state.
 
 ```js
 const App = () => {
-  const { get, dispatch } = CounterStore.useStore()
-  const count = get(s => s.count)
+  const { useStore, dispatch } = counterStore
+  const count = useStore(S => S.count)
   return (
     <div>
       <span>{count}</span>
