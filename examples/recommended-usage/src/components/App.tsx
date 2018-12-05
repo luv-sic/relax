@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 import Profile from './Profile'
 import Counter from './Counter'

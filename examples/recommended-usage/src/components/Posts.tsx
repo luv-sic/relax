@@ -1,12 +1,8 @@
-import * as React from 'react'
-import PostStore from '@stores/PostStore'
+import React, { useEffect } from 'react'
+import { useStore, dispatch } from '@stores/PostStore'
 
 const Posts = () => {
-  const { get, dispatch } = PostStore.useStore()
-  const { loading, posts } = get(s => s)
-
-  const USE_EFFECT = 'useEffect'
-  const useEffect = React[USE_EFFECT]
+  const { loading, posts } = useStore(S => S)
   useEffect(() => {
     dispatch('fetchPost')
   })

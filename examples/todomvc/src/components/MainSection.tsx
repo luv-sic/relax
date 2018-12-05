@@ -1,11 +1,10 @@
 import * as React from 'react'
 import Footer from './Footer'
 import TodoList from './TodoList'
-import TodoStore from '@stores/TodoStore'
+import { useStore, dispatch } from '@stores/TodoStore'
 
 const MainSection = () => {
-  const { get, dispatch } = TodoStore.useStore()
-  const todos = get(s => s.todos)
+  const todos = useStore(S => S.todos)
   const todosCount = todos.length
   const completedCount = todos.filter(todo => todo.completed).length
 

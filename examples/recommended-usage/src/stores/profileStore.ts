@@ -1,6 +1,6 @@
 import { createStore } from 'stamen'
 
-const ProfileStore = createStore({
+const { useStore, dispatch } = createStore({
   state: {
     id: '2668081',
     type: 'User',
@@ -25,4 +25,5 @@ const ProfileStore = createStore({
   },
 })
 
-export default ProfileStore
+export default { useStore, dispatch }
+export { useStore, dispatch }

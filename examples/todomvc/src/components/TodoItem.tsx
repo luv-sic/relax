@@ -1,8 +1,7 @@
 import * as React from 'react'
 import classnames from 'classnames'
 import TodoTextInput from './TodoTextInput'
-
-import TodoStore from '@stores/TodoStore'
+import { dispatch } from '@stores/TodoStore'
 
 interface Props {
   todo: object | any // TODO
@@ -12,7 +11,6 @@ const TodoItem: React.SFC<Props> = props => {
   const USE_STATE = 'useState'
   const useState = React[USE_STATE]
   const [editing, setState] = useState(false)
-  const { dispatch } = TodoStore.useStore()
   const { todo } = props
 
   const handleSave = (id: number, text: string) => {

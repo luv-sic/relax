@@ -17,7 +17,7 @@ const initialState: State = {
   posts: [],
 }
 
-const CounterStore = createStore({
+const { useStore, dispatch } = createStore({
   state: initialState,
   reducers: {
     updateLoading(state, status: boolean) {
@@ -28,7 +28,7 @@ const CounterStore = createStore({
     },
   },
   effects: {
-    async fetchPost(dispatch) {
+    async fetchPost() {
       const url = 'https://jsonplaceholder.typicode.com/posts?userId=1'
       const posts = await fetch(url).then(response => response.json())
 
@@ -49,4 +49,5 @@ function sleep(time: number) {
   })
 }
 
-export default CounterStore
+export default { useStore, dispatch }
+export { useStore, dispatch }

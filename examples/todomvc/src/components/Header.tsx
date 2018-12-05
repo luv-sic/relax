@@ -1,9 +1,8 @@
 import * as React from 'react'
 import TodoTextInput from './TodoTextInput'
-import TodoStore from '@stores/TodoStore'
+import { dispatch } from '@stores/TodoStore'
 
 const Header = () => {
-  const { dispatch } = TodoStore.useStore()
   return (
     <header className="header">
       <h1>todos</h1>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TodoItem from './TodoItem'
-import TodoStore, { TodoType } from '@stores/TodoStore'
+import { TodoType, useStore } from '@stores/TodoStore'
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
 
 function getVisibleTodos(todos: TodoType[], visibilityFilter: string) {
@@ -22,8 +22,7 @@ function getVisibleTodos(todos: TodoType[], visibilityFilter: string) {
 }
 
 const TodoList: React.SFC = () => {
-  const { get } = TodoStore.useStore()
-  const { todos, visibilityFilter } = get(s => s)
+  const { todos, visibilityFilter } = useStore(S => S)
 
   const visibleTodos = getVisibleTodos(todos, visibilityFilter)
 

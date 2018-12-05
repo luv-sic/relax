@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'stamen'
 
-const CounterStore = createStore({
+const { useStore, dispatch } = createStore({
   state: {
     count: 10,
   },
@@ -15,25 +15,24 @@ const CounterStore = createStore({
     },
   },
   effects: {
-    async asyncIncrement(dispatch) {
+    async asyncIncrement() {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve()
         }, 1000)
       })
-      dispatch('increment')
+      dispatch("increment")
     },
   },
 })
 
 const App = () => {
-  const { get, dispatch } = CounterStore.useStore()
-  const count = get(s => s.count)
+  const count = useStore(S => S.count)
   return (
     <div>
       <span>{count}</span>
       <button onClick={() => dispatch('decrement')}>-</button>
-      <button onClick={() => dispatch('increment')}>+</button>
+      <button onClick={() => dispatch(S => S.increment)}>+</button>
       <button onClick={() => dispatch('asyncIncrement')}>async+</button>
     </div>
   )

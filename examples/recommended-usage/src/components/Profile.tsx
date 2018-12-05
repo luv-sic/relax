@@ -1,16 +1,15 @@
 import * as React from 'react'
-import ProfileStore from '@stores/ProfileStore'
+import { useStore, dispatch } from '@stores/ProfileStore'
 
 const Counter = () => {
-  const { get, dispatch } = ProfileStore.useStore()
-  const user = get(s => s)
+  const user = useStore(S => S)
 
   return (
     <div className="box profile">
       <h2>Profile</h2>
       <pre>{JSON.stringify(user, null, 2)}</pre>
-      <button onClick={() => dispatch(a => a.updateName)}>update name</button>
-      <button onClick={() => dispatch(a => a.reset)}>restore</button>
+      <button onClick={() => dispatch(A => A.updateName)}>update name</button>
+      <button onClick={() => dispatch(A => A.reset)}>restore</button>
     </div>
   )
 }
