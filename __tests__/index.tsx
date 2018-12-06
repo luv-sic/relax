@@ -3,7 +3,7 @@ import React from 'react'
 import { createStore } from '../src/index'
 
 test('useStore', () => {
-  const { useStore } = createStore({
+  const { useStore, dispatch } = createStore({
     state: {
       count: 1,
       name: 'Counter',
@@ -17,7 +17,7 @@ test('useStore', () => {
       },
     },
     effects: {
-      async asyncIncrement(dispatch) {
+      async asyncIncrement() {
         await new Promise(resolve => {
           setTimeout(() => {
             resolve()
@@ -28,8 +28,7 @@ test('useStore', () => {
     },
   })
   const App = () => {
-    const { get } = useStore()
-    const count = get(s => s.count)
+    const count = useStore(S => S.count)
 
     return <span>{count}</span>
   }
