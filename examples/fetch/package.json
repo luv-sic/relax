@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "gery": "^1.0.3",
+    "gery": "^1.1.2",
+    "gql-tag": "^1.0.1",
     "graphql-request": "^1.8.2",
     "promise-hook": "^0.1.4",
     "react": "16.7.0-alpha.0",

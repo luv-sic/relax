@@ -37,7 +37,7 @@ const TodoItem = () => {
 const Todo = () => {
   useMount(async () => {
     try {
-      await todoStore.query(g => g.getMovie, {
+      await todoStore.query(Q => Q.getMovie, {
         variables: {
           title: 'Inception',
         },

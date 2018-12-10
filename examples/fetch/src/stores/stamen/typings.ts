@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Variables } from 'gery'
 
 export interface Opt<S, G, R, E> {
   name?: string
@@ -43,7 +42,9 @@ export interface Result<T> {
 }
 
 export interface QueryParams {
-  variables: Variables
+  variables: {
+    [key: string]: any
+  }
   stateKey?: string
 }
 

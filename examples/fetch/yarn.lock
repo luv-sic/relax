@@ -3328,10 +3328,10 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-gery@^1.0.3:
-  version "1.0.3"
-  resolved "http://registry.npm.taobao.org/gery/download/gery-1.0.3.tgz#56eab7cead693b74c1f745c239e31980a5d8d1d2"
-  integrity sha1-Vuq3zq1pO3TB90XCOeMZgKXY0dI=
+gery@^1.1.2:
+  version "1.1.2"
+  resolved "http://registry.npm.taobao.org/gery/download/gery-1.1.2.tgz#50f853acccdf0f916c86a47764aa9592c08dd39b"
+  integrity sha1-UPhTrMzfD5FshqR3ZKqVksCN05s=
   dependencies:
     cross-fetch "^2.2.3"
 
@@ -3475,6 +3475,11 @@ got@^6.7.1:
     timed-out "^4.0.0"
     unzip-response "^2.0.1"
     url-parse-lax "^1.0.0"
+
+gql-tag@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/gql-tag/download/gql-tag-1.0.1.tgz#25294dc23986db5b950b81a8bc8debfb0acf6140"
+  integrity sha1-JSlNwjmG21uVC4GovI3r+wrPYUA=
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.15"

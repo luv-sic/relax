@@ -1,4 +1,4 @@
-import { gql } from 'gery'
+import gql from 'gql-tag'
 // import { createStore } from 'stamen'
 import { createStore, Result } from './stamen'
 
