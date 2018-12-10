@@ -3,7 +3,7 @@ import { useState } from 'react'
 import produce from 'immer'
 import equal from 'fast-deep-equal'
 
-import { Client } from 'gery'
+import { GraphQLClient } from 'gery'
 import { useMount, useUnmount, getActionName } from './util'
 import {
   Opt,
@@ -94,7 +94,7 @@ function createStore<S, G extends Graphqls, R extends Reducers<S>, E extends Eff
   function mutate(result: Result<any>, stateKey: string) {
     const { loading, data, error } = result
     updaters.forEach(updater => {
-      const nextState: S = produce<any>(storeState, (draft: S) => {
+      const nextState: S = produce<any>(storeState, (draft: any) => {
         draft[stateKey] = { loading, data, error }
       })
 
@@ -112,7 +112,7 @@ function createStore<S, G extends Graphqls, R extends Reducers<S>, E extends Eff
   async function query(graphqlSelector: (graphqls: G) => any, params: QueryParams) {
     const { stateKey, variables } = params
     const { endpoint, headers } = config.graphql
-    const client = new Client(endpoint, { headers })
+    const client = new GraphQLClient({ endpoint, headers })
     const key = stateKey || 'TODO' // TODO: 默认值
 
     updateQueryStatus(key, true)
