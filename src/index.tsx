@@ -121,7 +121,11 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     }
   }
 
-  return { useStore, dispatch, query }
+  function getState(): S {
+    return storeState
+  }
+
+  return { useStore, dispatch, query, getState }
 }
 
 export default stamen
