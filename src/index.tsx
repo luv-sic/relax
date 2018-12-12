@@ -7,7 +7,6 @@ import { GraphQLClient } from 'gery'
 import { useMount, useUnmount, getActionName } from './util'
 import {
   Opt,
-  Graphqls,
   Reducers,
   Effects,
   Selector,
@@ -15,7 +14,7 @@ import {
   ActionSelector,
   Updater,
   Result,
-  QueryParams,
+  Variables,
   Config,
 } from './typings'
 
@@ -32,16 +31,9 @@ const stamen = {
   },
 }
 
-function createStore<S, G extends Graphqls, R extends Reducers<S>, E extends Effects>(
-  opt: Opt<S, G, R, E>,
-) {
+function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R, E>) {
   let storeState: S = opt.state
   const updaters: Array<Updater<S>> = []
-
-  let graphqls: G
-  if (opt.graphqls) {
-    graphqls = opt.graphqls
-  }
 
   function useStore<P>(selector: Selector<S, P>) {
     const [state, setState] = useState(storeState)
@@ -109,22 +101,23 @@ function createStore<S, G extends Graphqls, R extends Reducers<S>, E extends Eff
     mutate({ loading, data, error }, stateKey)
   }
 
-  async function query(graphqlSelector: (graphqls: G) => any, params: QueryParams) {
-    const { stateKey, variables } = params
+  async function query(gqlStr: string, variables?: Variables, options?: any) {
+    const { stateKey } = options || ({} as any)
     const { endpoint, headers } = config.graphql
     const client = new GraphQLClient({ endpoint, headers })
-    const key = stateKey || 'TODO' // TODO: 默认值
+    const key = stateKey || gqlStr
 
     updateQueryStatus(key, true)
 
     try {
-      const data = await client.query(graphqlSelector(graphqls), variables)
+      const data = await client.query(gqlStr, variables)
       updateQueryStatus(key, false, data)
       return data
     } catch (error) {
       updateQueryStatus(key, false, undefined, error)
+      console.log('error:', error)
 
-      throw new Error(error) // TODO: message
+      throw error
     }
   }
 

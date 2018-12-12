@@ -1,9 +1,8 @@
 import * as React from 'react'
 
-export interface Opt<S, G, R, E> {
+export interface Opt<S, R, E> {
   name?: string
   state: S
-  graphqls?: G
   reducers?: R
   effects?: E
 }
@@ -24,10 +23,6 @@ export interface Reducers<S> {
   [key: string]: ReducerFn<S>
 }
 
-export interface Graphqls {
-  [key: string]: any
-}
-
 export type ReducerFn<S> = (state: S, payload?: any) => S | void
 
 export interface Effects {
@@ -41,11 +36,8 @@ export interface Result<T> {
   error: any
 }
 
-export interface QueryParams {
-  variables: {
-    [key: string]: any
-  }
-  stateKey?: string
+export interface Variables {
+  [key: string]: any
 }
 
 export interface Config {
