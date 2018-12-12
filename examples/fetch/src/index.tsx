@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import Todo from '@components/Todo'
 
-import stamen from './stores/stamen'
+import stamen from './src'
 
 stamen.init({
   graphql: {

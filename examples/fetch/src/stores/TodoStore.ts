@@ -1,6 +1,4 @@
-import gql from 'gql-tag'
-// import { createStore } from 'stamen'
-import { createStore, Result } from './stamen'
+import { createStore, Result } from '../src'
 
 interface TodoItem {
   userId: number
@@ -23,18 +21,6 @@ const initialState: State = {
 
 const { useStore, dispatch, query } = createStore({
   state: initialState,
-  graphqls: {
-    getMovie: gql`
-      query getMovie($title: String) {
-        Movie(title: $title) {
-          releaseDate
-          actors {
-            name
-          }
-        }
-      }
-    `,
-  },
   reducers: {
     updateTodo(state, payload) {
       state.todo = payload
@@ -42,15 +28,7 @@ const { useStore, dispatch, query } = createStore({
   },
   effects: {
     async fetchTodo(payload) {
-      const r = await query(g => g.getMovie, {
-        variables: {
-          title: 'Inception',
-        },
-      })
-
-      console.log('r:', r)
-
-      dispatch(a => a.updateTodo, {
+      dispatch(A => A.updateTodo, {
         loading: true,
         data: {},
       })

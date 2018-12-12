@@ -1,4 +1,4 @@
-import { createStore } from './stamen'
+import { createStore } from '../src'
 
 const { useStore, dispatch, query } = createStore({
   state: {
