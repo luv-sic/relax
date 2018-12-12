@@ -17,7 +17,7 @@ const initialState: State = {
   posts: [],
 }
 
-const { useStore, dispatch } = createStore({
+export const { useStore, dispatch } = createStore({
   state: initialState,
   reducers: {
     updateLoading(state, status: boolean) {
@@ -50,4 +50,3 @@ function sleep(time: number) {
 }
 
 export default { useStore, dispatch }
-export { useStore, dispatch }

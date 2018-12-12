@@ -9,7 +9,7 @@ const Count = () => {
   const { useStore, dispatch } = counterStore
   const count = useStore(s => s.count)
   useEffect(() => {
-    dispatch(A => A.increment, 1)
+    dispatch(A => A.asyncIncrement, 12)
   }, [])
   return <div>{count}</div>
 }

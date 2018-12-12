@@ -1,6 +1,6 @@
 import { createStore } from '../src'
 
-const { useStore, dispatch, query } = createStore({
+const { useStore, dispatch, getState, query } = createStore({
   state: {
     count: 10,
     name: 'Counter',
@@ -16,11 +16,11 @@ const { useStore, dispatch, query } = createStore({
   effects: {
     async asyncIncrement() {
       await sleep(1000)
-      dispatch('increment')
+      dispatch(A => A.increment, 2)
     },
     async asyncDecrement() {
       await sleep(1000)
-      dispatch('decrement', 1)
+      dispatch(A => A.increment)
     },
   },
 })
@@ -33,5 +33,5 @@ function sleep(time: number) {
   })
 }
 
-export default { useStore, dispatch, query }
-export { useStore, dispatch, query }
+export default { useStore, dispatch, getState, query }
+export { useStore, dispatch, getState, query }

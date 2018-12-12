@@ -1,6 +1,6 @@
 import { createStore } from 'stamen'
 
-const { useStore, dispatch, query } = createStore({
+export const { useStore, dispatch, query } = createStore({
   name: 'todoStore',
   state: {
     currentItem: {
@@ -25,4 +25,3 @@ const { useStore, dispatch, query } = createStore({
 })
 
 export default { useStore, dispatch, query }
-export { useStore, dispatch, query }

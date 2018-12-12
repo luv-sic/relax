@@ -23,7 +23,7 @@ const initialState: State = {
   visibilityFilter: SHOW_ALL,
 }
 
-const { useStore, dispatch } = createStore({
+export const { useStore, dispatch } = createStore({
   state: initialState,
   reducers: {
     addTodo(state, text: string) {
@@ -66,4 +66,3 @@ const { useStore, dispatch } = createStore({
 })
 
 export default { useStore, dispatch }
-export { useStore, dispatch }

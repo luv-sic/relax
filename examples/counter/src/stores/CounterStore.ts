@@ -1,6 +1,6 @@
 import { createStore } from 'stamen'
 
-const { useStore, dispatch, query } = createStore({
+export const { useStore, dispatch, query } = createStore({
   state: {
     count: 10,
     name: 'Counter',
@@ -34,4 +34,3 @@ function sleep(time: number) {
 }
 
 export default { useStore, dispatch, query }
-export { useStore, dispatch, query }
