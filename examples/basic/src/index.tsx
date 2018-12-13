@@ -16,12 +16,12 @@ const { useStore, dispatch } = createStore({
   },
   effects: {
     async asyncIncrement() {
-      await new Promise((resolve, reject) => {
+      await new Promise(resolve => {
         setTimeout(() => {
           resolve()
         }, 1000)
       })
-      dispatch("increment")
+      dispatch(A => A.increment)
     },
   },
 })
@@ -31,9 +31,9 @@ const App = () => {
   return (
     <div>
       <span>{count}</span>
-      <button onClick={() => dispatch('decrement')}>-</button>
-      <button onClick={() => dispatch(S => S.increment)}>+</button>
-      <button onClick={() => dispatch('asyncIncrement')}>async+</button>
+      <button onClick={() => dispatch(A => A.decrement)}>-</button>
+      <button onClick={() => dispatch(A => A.increment)}>+</button>
+      <button onClick={() => dispatch(A => A.asyncIncrement)}>async+</button>
     </div>
   )
 }

@@ -1,10 +1,17 @@
 import { createStore } from 'stamen'
 
+interface State {
+  count: number
+  name: string
+}
+
+const initialState: State = {
+  count: 10,
+  name: 'Counter',
+}
+
 export const { useStore, dispatch, query } = createStore({
-  state: {
-    count: 10,
-    name: 'Counter',
-  },
+  state: initialState,
   reducers: {
     increment(state, payload: any = 1) {
       state.count += payload
