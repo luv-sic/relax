@@ -1,4 +1,4 @@
-<img src="http://forsigner.com/images/stamen-logo.jpg" height="200px" align="right"/>
+<img src="http://forsigner.com/images/dahlia/dahlia-stamen.svg"  align="center"/>
 
 # Stamen
 
