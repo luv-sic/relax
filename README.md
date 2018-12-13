@@ -20,7 +20,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'stamen'
 
-const counterStore = createStore({
+const { useStore, dispatch } = createStore({
   state: {
     count: 10,
   },
@@ -34,25 +34,24 @@ const counterStore = createStore({
   },
   effects: {
     async asyncIncrement() {
-      await new Promise((resolve, reject) => {
+      await new Promise(resolve => {
         setTimeout(() => {
           resolve()
         }, 1000)
       })
-      counterStore.dispatch('increment')
+      dispatch(A => A.increment)
     },
   },
 })
 
 const App = () => {
-  const { useStore, dispatch } = counterStore
   const count = useStore(S => S.count)
   return (
     <div>
       <span>{count}</span>
-      <button onClick={() => dispatch('decrement')}>-</button>
-      <button onClick={() => dispatch('increment')}>+</button>
-      <button onClick={() => dispatch('asyncIncrement')}>async+</button>
+      <button onClick={() => dispatch(A => A.decrement)}>-</button>
+      <button onClick={() => dispatch(A => A.increment)}>+</button>
+      <button onClick={() => dispatch(A => A.asyncIncrement)}>async+</button>
     </div>
   )
 }
@@ -100,8 +99,8 @@ const App = () => {
   return (
     <div>
       <span>{count}</span>
-      <button onClick={() => dispatch('decrement')}>-</button>
-      <button onClick={() => dispatch('increment')}>+</button>
+      <button onClick={() => dispatch(A => A.decrement)}>-</button>
+      <button onClick={() => dispatch(A => A.increment)}>+</button>
     </div>
   )
 }
@@ -162,7 +161,7 @@ const someStore = createStore({
           resolve()
         }, 1000)
       })
-      someStore.dispatch('increment')
+      someStore.dispatch(A => A.increment)
     },
   },
 })
