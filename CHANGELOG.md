@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/forsigner/stamen/compare/v1.7.0...v1.8.0) (2018-12-18)
+
+
+### Bug Fixes
+
+* fix update storeState ([a14b889](https://github.com/forsigner/stamen/commit/a14b889))
+
+
+### Features
+
+* can getState ([ce673d6](https://github.com/forsigner/stamen/commit/ce673d6))
+* update basic example ([cc8a631](https://github.com/forsigner/stamen/commit/cc8a631))
+
+
+
 <a name="1.7.0"></a>
 # [1.7.0](https://github.com/forsigner/stamen/compare/v1.6.0...v1.7.0) (2018-12-10)
 
