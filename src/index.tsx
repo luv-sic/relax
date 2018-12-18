@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import produce from 'immer'
-import equal from 'fast-deep-equal'
+// import equal from 'fast-deep-equal'
 
 import { GraphQLClient } from 'gery'
 import { useMount, useUnmount, getActionName } from './util'
@@ -57,13 +57,12 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
         action(draft, payload)
       })
 
-      // prevent re-render
-      if (equal(selector(storeState), selector(nextState))) return
+      // TODO: prevent re-render
+      // if (equal(selector(storeState), selector(nextState))) return
 
-      set(() => {
-        storeState = nextState
-        return nextState
-      })
+      storeState = nextState
+
+      set(() => nextState)
     }
 
     return selector(state)
@@ -129,4 +128,4 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
 }
 
 export default stamen
-export { createStore, Result }
+export { createStore }
