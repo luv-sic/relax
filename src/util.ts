@@ -18,7 +18,7 @@ export function getActionName(action: any): string {
 
   try {
     const str = action.toString()
-    const regAction = /return.*\.(.*);/
+    const regAction = /return.*\.(.*)[;,}]/
     const arr: any = str.match(regAction) || []
     return arr[1]
   } catch {
