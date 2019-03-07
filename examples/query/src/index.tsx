@@ -1,42 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider, Subscribe, Container } from 'unstated'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import Todo from '@components/Todo'
 
-interface CounterState {
-  count: number
-}
+import stamen from './src'
 
-class CounterContainer extends Container<CounterState> {
-  state = {
-    count: 0,
-  }
+stamen.init({
+  rest: {
+    endpoint: 'https://jsonplaceholder.typicode.com',
+  },
+  graphql: {
+    endpoint: 'https://jsonplaceholder.typicode.com',
+  },
+})
 
-  increment() {
-    this.setState({ count: this.state.count + 1 })
-  }
-
-  decrement() {
-    this.setState({ count: this.state.count - 1 })
-  }
-}
-
-function Counter() {
-  return (
-    <Subscribe to={[CounterContainer]}>
-      {(counter: CounterContainer) => (
-        <div>
-          <button onClick={() => counter.decrement()}>-</button>
-          <span>{counter.state.count}</span>
-          <button onClick={() => counter.increment()}>+</button>
-        </div>
-      )}
-    </Subscribe>
-  )
-}
-
-ReactDOM.render(
-  <Provider>
-    <Counter />
-  </Provider>,
-  document.getElementById('root'),
-)
+ReactDOM.render(<Todo />, document.getElementById('root') as HTMLElement)

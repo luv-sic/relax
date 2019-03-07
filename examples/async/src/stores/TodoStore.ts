@@ -11,7 +11,7 @@ export const { useStore, dispatch, query } = createStore({
     },
   },
   reducers: {
-    updateTodo(state, payload) {
+    T(state, payload) {
       state.currentItem = payload
     },
   },
@@ -19,7 +19,7 @@ export const { useStore, dispatch, query } = createStore({
     async fetchTodo(payload) {
       const url = `https://jsonplaceholder.typicode.com/todos/${payload}`
       const data = await fetch(url).then(response => response.json())
-      dispatch(A => A.updateTodo, data)
+      dispatch(A => A.T, data)
     },
   },
 })
