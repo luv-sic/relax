@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import crossfetch from 'cross-fetch'
 
 import produce from 'immer'
 // import equal from 'fast-deep-equal'
@@ -19,6 +20,9 @@ import {
 } from './typings'
 
 let config: Config = {
+  rest: {
+    endpoint: '',
+  },
   graphql: {
     endpoint: '',
     headers: {},
@@ -96,8 +100,32 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     })
   }
 
-  function updateQueryStatus(stateKey: string, loading: boolean, data?: any, error?: any) {
+  function updateStore(stateKey: string, loading: boolean, data?: any, error?: any) {
     mutate({ loading, data, error }, stateKey)
+  }
+
+  async function fetch(url: string, options?: any) {
+    const { stateKey } = options || ({} as any)
+    const { endpoint } = config.rest
+    const key = stateKey || url
+
+    updateStore(key, true)
+
+    try {
+      const res: any = await crossfetch(endpoint + url)
+      if (res.status >= 400) {
+        throw new Error('Bad response from server')
+      }
+      const data = await res.json()
+
+      updateStore(key, false, data)
+      return data
+    } catch (error) {
+      updateStore(key, false, undefined, error)
+      console.log('error:', error)
+
+      throw error
+    }
   }
 
   async function query(gqlStr: string, variables?: Variables, options?: any) {
@@ -106,14 +134,14 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     const client = new GraphQLClient({ endpoint, headers })
     const key = stateKey || gqlStr
 
-    updateQueryStatus(key, true)
+    updateStore(key, true)
 
     try {
       const data = await client.query(gqlStr, variables)
-      updateQueryStatus(key, false, data)
+      updateStore(key, false, data)
       return data
     } catch (error) {
-      updateQueryStatus(key, false, undefined, error)
+      updateStore(key, false, undefined, error)
       console.log('error:', error)
 
       throw error
@@ -124,8 +152,8 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     return storeState
   }
 
-  return { useStore, dispatch, query, getState }
+  return { useStore, dispatch, fetch, query, getState }
 }
 
 export default stamen
-export { createStore }
+export { createStore, Result }

@@ -41,9 +41,18 @@ export interface Variables {
 }
 
 export interface Config {
+  rest: {
+    endpoint: string
+    body?: {
+      [key: string]: string
+    }
+    headers?: {
+      [key: string]: string
+    }
+  }
   graphql: {
     endpoint: string
-    headers: {
+    headers?: {
       [key: string]: string
     }
   }
