@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.9.0](https://github.com/forsigner/stamen/compare/v1.8.2...v1.9.0) (2019-03-07)
+
+
+### Features
+
+* support fetch ([0c05474](https://github.com/forsigner/stamen/commit/0c05474))
+
+
+
 ## [1.8.2](https://github.com/forsigner/stamen/compare/v1.8.1...v1.8.2) (2019-03-04)
 
 
