@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es7", "dom", "esnext"],
+    "lib": [
+      "es7",
+      "dom",
+      "esnext"
+    ],
     "sourceMap": true,
     "allowJs": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -20,11 +23,13 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "paths": {
-      "@stores/*": ["src/stores/*"],
-      "@components/*": ["src/components/*"],
-    }
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
+  "extends": "./tsconfig.path.json",
   "exclude": [
     "node_modules",
     "build",
@@ -33,5 +38,8 @@
     "webpack",
     "jest",
     "src/setupTests.ts"
+  ],
+  "include": [
+    "src"
   ]
 }
