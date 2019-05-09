@@ -29,31 +29,3 @@ export interface Effects {
   [key: string]: EffectFn
 }
 export type EffectFn = (payload: any) => any
-
-export interface Result<T> {
-  loading: boolean
-  data: T
-  error: any
-}
-
-export interface Variables {
-  [key: string]: any
-}
-
-export interface Config {
-  rest: {
-    endpoint: string
-    body?: {
-      [key: string]: string
-    }
-    headers?: {
-      [key: string]: string
-    }
-  }
-  graphql: {
-    endpoint: string
-    headers?: {
-      [key: string]: string
-    }
-  }
-}

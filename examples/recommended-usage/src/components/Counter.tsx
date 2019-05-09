@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStore, dispatch } from 'stores/counterStore'
+import { useStore, dispatch } from '../stores/counterStore'
 
 const Counter = () => {
   const { name, count } = useStore(S => S)

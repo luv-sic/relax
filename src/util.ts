@@ -17,7 +17,12 @@ export function getActionName(action: any): string {
   if (typeof action === 'string') return action
 
   try {
-    const str = action.toString()
+    const str: string = action.toString()
+
+    if (str.indexOf('=>')) {
+      return str.split('.')[1]
+    }
+
     const regAction = /return.*\.(.*)[;,}]/
     const arr: any = str.match(regAction) || []
     return arr[1]

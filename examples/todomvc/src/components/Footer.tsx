@@ -2,7 +2,7 @@ import * as React from 'react'
 import Link from './Link'
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
 
-const FILTER_TITLES = {
+const FILTER_TITLES: any = {
   [SHOW_ALL]: 'All',
   [SHOW_ACTIVE]: 'Active',
   [SHOW_COMPLETED]: 'Completed',

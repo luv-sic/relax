@@ -1,7 +1,7 @@
 import * as React from 'react'
 import classnames from 'classnames'
 import TodoTextInput from './TodoTextInput'
-import { dispatch } from '@stores/TodoStore'
+import { dispatch } from '../stores/todoStore'
 
 interface Props {
   todo: object | any // TODO
@@ -32,7 +32,7 @@ const TodoItem: React.SFC<Props> = props => {
     element = (
       <TodoTextInput
         text={todo.text}
-        editing={this.state.editing}
+        editing={editing}
         onSave={text => handleSave(todo.id, text)}
       />
     )

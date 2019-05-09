@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Footer from './Footer'
 import TodoList from './TodoList'
-import { useStore, dispatch } from '@stores/TodoStore'
+import { useStore, dispatch } from '../stores/todoStore'
 
 const MainSection = () => {
   const todos = useStore(S => S.todos)

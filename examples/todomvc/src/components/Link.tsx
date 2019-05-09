@@ -1,6 +1,6 @@
 import * as React from 'react'
 import classnames from 'classnames'
-import { useStore, dispatch } from '@stores/TodoStore'
+import { useStore, dispatch } from '../stores/todoStore'
 
 interface LinkProp {
   filter: string

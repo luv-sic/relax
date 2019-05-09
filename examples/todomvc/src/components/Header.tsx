@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TodoTextInput from './TodoTextInput'
-import { dispatch } from '@stores/TodoStore'
+import { dispatch } from '../stores/todoStore'
 
 const Header = () => {
   return (

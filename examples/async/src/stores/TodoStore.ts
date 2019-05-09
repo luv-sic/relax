@@ -1,6 +1,6 @@
 import { createStore } from 'stamen'
 
-export const { useStore, dispatch, query } = createStore({
+export const { useStore, dispatch } = createStore({
   name: 'todoStore',
   state: {
     currentItem: {
@@ -11,7 +11,7 @@ export const { useStore, dispatch, query } = createStore({
     },
   },
   reducers: {
-    T(state, payload) {
+    updateTodo(state, payload) {
       state.currentItem = payload
     },
   },
@@ -19,9 +19,9 @@ export const { useStore, dispatch, query } = createStore({
     async fetchTodo(payload) {
       const url = `https://jsonplaceholder.typicode.com/todos/${payload}`
       const data = await fetch(url).then(response => response.json())
-      dispatch(A => A.T, data)
+      dispatch(A => A.updateTodo, data)
     },
   },
 })
 
-export default { useStore, dispatch, query }
+export default { useStore, dispatch }

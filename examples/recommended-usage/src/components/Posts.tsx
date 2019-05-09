@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useStore, dispatch } from 'stores/postStore'
+import { useStore, dispatch } from '../stores/postStore'
 
 const Posts = () => {
   const { loading, posts } = useStore(S => S)

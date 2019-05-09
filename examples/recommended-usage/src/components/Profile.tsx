@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useStore, dispatch } from 'stores/profileStore'
+import { useStore, dispatch } from '../stores/profileStore'
 
 const Counter = () => {
   const user = useStore(S => S)

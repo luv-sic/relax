@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TodoItem from './TodoItem'
-import { TodoType, useStore } from '@stores/TodoStore'
+import { TodoType, useStore } from '../stores/todoStore'
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
 
 function getVisibleTodos(todos: TodoType[], visibilityFilter: string) {

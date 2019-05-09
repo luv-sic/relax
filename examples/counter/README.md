@@ -1,102 +1,44 @@
-## Stamen recommended usage
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This is an typescript react example.
+## Available Scripts
 
-No need Provider, Connect , Inject... Just consume or mutate(action).
+In the project directory, you can run:
 
-```bash
-git clone https://github.com/forsigner/stamen
-cd stamen/recommended-usage
-yarn
-yarn start
-```
+### `npm start`
 
-then check `http://localhost:3000`
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Recommended way to organize stores files
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-```sh
-.
-├── components
-│   ├── App.tsx
-│   ├── Counter.tsx
-│   ├── Posts.tsx
-│   └── Profile.tsx
-├── index.tsx
-└── stores # multiple store and keep per store small
-    ├── counterStore.ts
-    ├── postStore.ts
-    └── profileStore.ts
-```
+### `npm test`
 
-### Recommended way to struct your store
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-```js
-import { createStore } from 'stamen'
+### `npm run build`
 
-const { consume, mutate } = createStore({ count: 1 })
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-const actions = {
-  increment() {
-    mutate(state => state.count++)
-  },
-  decrement() {
-    mutate(state => state.count--)
-  },
-  asyncIncrement() {
-    setTimeout(() => {
-      mutate(state => {
-        state.count++
-      })
-    }, 1000)
-  },
-  async asyncDecrement() {
-    await new Promise((resolve, _) => {
-      setTimeout(() => {
-        resolve()
-      }, 1000)
-    })
-    mutate(state => state.count--)
-  },
-}
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-export { consume, mutate, actions }
-```
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### Use in Component
+### `npm run eject`
 
-```js
-import * as React from 'react'
-import { consume, actions } from '@stores/counterStore'
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-const Counter = () => (
-  <div>
-    <div>{consume(state => state.count)}</div>
-    <button onClick={actions.decrement}>-</button>
-    <button onClick={actions.increment}>+</button>
-  </div>
-)
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-export default Counter
-```
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-**tips:**
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-Config `path` option in tsconfig.json, or `alias` in webpack, so you can import store like this in any where:
+## Learn More
 
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-
-```js
-import { consume, actions } from '@stores/counterStore'
-```
-
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "@stores/*": ["src/stores/*"],
-    }
-  }
-}
-```
-
+To learn React, check out the [React documentation](https://reactjs.org/).
