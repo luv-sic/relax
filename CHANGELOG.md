@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.10.0](https://github.com/forsigner/stamen/compare/v1.9.0...v1.10.0) (2019-05-09)
+
+
+### Bug Fixes
+
+* 🐛 修复recommended-usage无法运行的问题 ([113f030](https://github.com/forsigner/stamen/commit/113f030))
+
+
+### Features
+
+* rm graphql ([60cc4a0](https://github.com/forsigner/stamen/commit/60cc4a0))
+
+
+
 # [1.9.0](https://github.com/forsigner/stamen/compare/v1.8.2...v1.9.0) (2019-03-07)
 
 
