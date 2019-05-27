@@ -1,44 +1,22 @@
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 
 import produce from 'immer'
-// import equal from 'fast-deep-equal'
-
 import { useMount, useUnmount, getActionName } from './util'
-import { Opt, Reducers, Effects, Selector, ReducerFn, ActionSelector, Updater } from './typings'
+import { Opt, Reducers, Effects, Selector, ActionSelector } from './typings'
 
 function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R, E>) {
   let storeState: S = opt.state
-  const updaters: Array<Updater<S>> = []
+  const updaters: Dispatch<SetStateAction<S>>[] = []
 
   function useStore<P>(selector: Selector<S, P>) {
     const [state, setState] = useState(storeState)
-    const updater = {
-      update,
-      set: setState,
-    }
-
     useMount(() => {
-      updaters.push(updater)
+      updaters.push(setState)
     })
 
     useUnmount(() => {
-      updaters.splice(updaters.indexOf(updater), 1)
+      updaters.splice(updaters.indexOf(setState), 1)
     })
-
-    function update(set: any, action: ReducerFn<S>, payload: any): any {
-      if (!action) return null
-
-      const nextState: S = produce<any>(storeState, (draft: S) => {
-        action(draft, payload)
-      })
-
-      // TODO: prevent re-render
-      // if (equal(selector(storeState), selector(nextState))) return
-
-      storeState = nextState
-
-      set(() => nextState)
-    }
 
     return selector(state)
   }
@@ -50,11 +28,18 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     }
     if (!updaters.length) return
 
-    updaters.forEach(updater => {
-      if (opt.reducers) {
-        updater.update(updater.set, opt.reducers[actionName], payload)
-      }
-    })
+    if (opt.reducers && opt.reducers[actionName]) {
+      const action = opt.reducers[actionName]
+      if (!action) return null
+
+      const nextState: S = produce<any>(storeState, (draft: S) => {
+        action(draft, payload)
+      })
+      storeState = nextState
+      updaters.forEach(setState => {
+        setState(nextState)
+      })
+    }
   }
 
   function getState(): S {
