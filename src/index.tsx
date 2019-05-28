@@ -46,7 +46,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     return storeState
   }
 
-  return { useStore, dispatch, fetch, getState }
+  return { useStore, dispatch, getState }
 }
 
 export { createStore }
