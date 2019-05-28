@@ -19,7 +19,7 @@ export function getActionName(action: any): string {
   try {
     const str: string = action.toString()
 
-    if (str.indexOf('=>')) {
+    if (str.indexOf('=>') != -1) {
       return str.split('.')[1]
     }
 
