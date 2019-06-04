@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from './stamen'
+import { createStore } from 'stamen'
 
 const { useStore, dispatch } = createStore({
   state: {
