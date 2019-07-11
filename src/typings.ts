@@ -7,14 +7,7 @@ export interface Opt<S, R, E> {
   effects?: E
 }
 
-export interface Updater<S> {
-  update: (set: any, action: ReducerFn<S>, payload: any) => any
-  set: any
-}
-
 export type ActionSelector<R, E> = (action: R & E) => any
-
-export type ActFn<R> = (action: R, payload?: any) => void
 
 export type Selector<S, P> = (state: S) => P
 export type RenderFn<P> = (partialState: P) => React.ReactNode
@@ -28,4 +21,4 @@ export type ReducerFn<S> = (state: S, payload?: any) => S | void
 export interface Effects {
   [key: string]: EffectFn
 }
-export type EffectFn = (payload: any) => any
+export type EffectFn = (payload: any) => Promise<any>
