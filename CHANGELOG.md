@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.11.0](https://github.com/forsigner/stamen/compare/v1.10.1...v1.11.0) (2019-07-12)
+
+
+### Bug Fixes
+
+* can return dispatch value ([d1a1515](https://github.com/forsigner/stamen/commit/d1a1515))
+
+
+### Features
+
+* dispatch return promise ([76f9396](https://github.com/forsigner/stamen/commit/76f9396))
+* improve performance ([ac5b17f](https://github.com/forsigner/stamen/commit/ac5b17f))
+
+
+
 ## [1.10.1](https://github.com/forsigner/stamen/compare/v1.10.0...v1.10.1) (2019-06-04)
 
 

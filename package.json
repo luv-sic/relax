@@ -1,6 +1,6 @@
 {
   "name": "stamen",
-  "version": "1.10.1",
+  "version": "1.11.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
