@@ -1,24 +1,58 @@
-import { useState, Dispatch, SetStateAction } from 'react'
+import { useState } from 'react'
+import equal from 'fast-deep-equal'
 
 import produce from 'immer'
 import { useMount, useUnmount, getActionName } from './util'
-import { Opt, Reducers, Effects, Selector, ActionSelector } from './typings'
+import {
+  Opt,
+  Reducers,
+  ReducerFn,
+  Effects,
+  StateSelector,
+  ActionSelector,
+  Updater,
+} from './typings'
 
 function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R, E>) {
   let storeState: S = opt.state
-  const updaters: Array<Dispatch<SetStateAction<S>>> = []
+  const updaters: Array<Updater<S>> = []
 
-  function useStore<P>(selector: Selector<S, P>) {
+  function useStore<P>(selector: StateSelector<S, P>) {
     const [state, setState] = useState(storeState)
+
+    const update: any = (set: any, action: ReducerFn<S>, payload: any) => {
+      let result: any
+      if (!action) return null
+
+      const nextState: S = produce<any>(storeState, (draft: S) => {
+        result = action(draft, payload)
+      })
+
+      // TODO: prevent re-render
+      if (equal(selector(storeState), selector(nextState))) return
+
+      storeState = nextState
+
+      set(() => nextState)
+      return result
+    }
+
+    const updater = {
+      update,
+      set: setState,
+    }
+
     useMount(() => {
-      updaters.push(setState)
+      updaters.push(updater)
     })
 
     useUnmount(() => {
-      updaters.splice(updaters.indexOf(setState), 1)
+      updaters.splice(updaters.indexOf(updater), 1)
     })
 
-    return selector(state)
+    const selectedState = selector(state)
+    console.log('selectedState:', selectedState)
+    return selectedState
   }
 
   async function dispatch<K extends any>(
@@ -33,17 +67,12 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     }
     if (!updaters.length) return
 
-    if (opt.reducers && opt.reducers[actionName]) {
-      const action = opt.reducers[actionName]
-      if (!action) return null
-
-      const nextState: S = produce<any>(storeState, (draft: S) => {
-        result = action(draft, payload)
-      })
-      storeState = nextState
-      updaters.forEach(setState => setState(nextState))
-      return result
-    }
+    updaters.forEach(updater => {
+      if (opt.reducers) {
+        result = updater.update(updater.set, opt.reducers[actionName], payload)
+      }
+    })
+    return result
   }
 
   function getState(): S {
