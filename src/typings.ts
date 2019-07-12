@@ -16,7 +16,7 @@ export interface Reducers<S> {
   [key: string]: ReducerFn<S>
 }
 
-export type ReducerFn<S> = (state: S, payload?: any) => S | void
+export type ReducerFn<S> = (state: S, payload?: any) => any
 
 export interface Effects {
   [key: string]: EffectFn
