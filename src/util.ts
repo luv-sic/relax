@@ -26,7 +26,7 @@ export function getActionName(action: any): string {
     const regAction = /return.*\.(.*)[;,}]/
     const arr: any = str.match(regAction) || []
     return arr[1]
-  } catch {
+  } catch (e) {
     throw new Error('action type or selector invalid')
   }
 }
