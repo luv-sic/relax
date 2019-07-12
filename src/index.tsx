@@ -29,7 +29,9 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
       })
 
       // TODO: prevent re-render
-      if (equal(selector(storeState), selector(nextState))) return
+      if (equal(selector(storeState), selector(nextState))) {
+        return result
+      }
 
       storeState = nextState
 
@@ -50,9 +52,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
       updaters.splice(updaters.indexOf(updater), 1)
     })
 
-    const selectedState = selector(state)
-    console.log('selectedState:', selectedState)
-    return selectedState
+    return selector(state)
   }
 
   async function dispatch<K extends any>(
