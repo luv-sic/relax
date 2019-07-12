@@ -6,11 +6,12 @@ import { createStore } from './src'
 const { useStore, dispatch } = createStore({
   state: {
     count: 10,
-    name: 'forsigner'
+    name: 'forsigner',
   },
   reducers: {
     setName(state) {
       state.name = 'livia'
+      return state.name
     },
     increment(state) {
       state.count++
@@ -31,13 +32,14 @@ const { useStore, dispatch } = createStore({
   },
 })
 
-setTimeout(() => {
-  dispatch(A => A.setName)
+setTimeout(async () => {
+  const name =  await dispatch(A => A.setName)
+  console.log('name:', name)
 }, 2000)
 
 const App = () => {
   const count = useStore(S => S.count)
-  console.log('render......');
+  console.log('render......')
   return (
     <div>
       <span>{count}</span>
