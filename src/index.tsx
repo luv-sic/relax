@@ -29,13 +29,11 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
       })
 
       // TODO: prevent re-render
-      if (equal(selector(storeState), selector(nextState))) {
-        return result
-      }
-
+      const shouldUpdate = equal(selector(storeState), selector(nextState))
       storeState = nextState
-
-      set(() => selector(nextState))
+      if(shouldUpdate) {
+        set(() => selector(nextState))
+      }
       return result
     }
 
