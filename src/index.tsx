@@ -18,13 +18,13 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
   const updaters: Array<Updater<S>> = []
 
   function useStore<P>(selector: StateSelector<S, P>) {
-    const [state, setState] = useState(storeState)
+    const [state, setState] = useState(() => selector(storeState));
 
     const update: any = (set: any, action: ReducerFn<S>, payload: any) => {
       let result: any
       if (!action) return null
 
-      const nextState: S = produce<any>(storeState, (draft: S) => {
+      const nextState: S = produce<any, S>(storeState, (draft: S) => {
         result = action(draft, payload)
       })
 
@@ -35,7 +35,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
 
       storeState = nextState
 
-      set(() => nextState)
+      set(() => selector(nextState))
       return result
     }
 
@@ -52,7 +52,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
       updaters.splice(updaters.indexOf(updater), 1)
     })
 
-    return selector(state)
+    return state
   }
 
   async function dispatch<K extends any>(
