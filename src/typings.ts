@@ -19,6 +19,6 @@ export interface Effects {
 export type EffectFn = (payload: any) => Promise<any>
 
 export interface Updater<S> {
-  update: (set: any, action: ReducerFn<S>, payload: any) => any
+  update: (set: any, oldState: S, nextState: S) => any
   set: any
 }
