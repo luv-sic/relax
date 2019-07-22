@@ -18,25 +18,13 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
   const updaters: Array<Updater<S>> = []
 
   function useStore<P>(selector: StateSelector<S, P>) {
-    const [state, setState] = useState(storeState)
+    const [state, setState] = useState(() => selector(storeState))
 
-    const update: any = (set: any, action: ReducerFn<S>, payload: any) => {
-      let result: any
-      if (!action) return null
-
-      const nextState: S = produce<any>(storeState, (draft: S) => {
-        result = action(draft, payload)
-      })
-
-      // TODO: prevent re-render
-      if (equal(selector(storeState), selector(nextState))) {
-        return result
+    const update: any = (set: any, oldState: S, nextState: S) => {
+      const shouldUpdate = !equal(selector(oldState), selector(nextState))
+      if (shouldUpdate) {
+        set(() => selector(nextState))
       }
-
-      storeState = nextState
-
-      set(() => nextState)
-      return result
     }
 
     const updater = {
@@ -52,7 +40,11 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
       updaters.splice(updaters.indexOf(updater), 1)
     })
 
-    return selector(state)
+    return state
+  }
+
+  function getState<P>(selector: StateSelector<S, P>) {
+    return selector(storeState)
   }
 
   async function dispatch<K extends any>(
@@ -67,16 +59,23 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(opt: Opt<S, R,
     }
     if (!updaters.length) return
 
-    updaters.forEach(updater => {
-      if (opt.reducers) {
-        result = updater.update(updater.set, opt.reducers[actionName], payload)
-      }
-    })
-    return result
-  }
+    if (!action) return null
 
-  function getState(): S {
-    return storeState
+    if (opt.reducers) {
+      const reducer: ReducerFn<S> = opt.reducers[actionName]
+      if (reducer) {
+        const nextState: S = produce<S, S>(storeState, (draft: S) => {
+          result = reducer(draft, payload)
+        })
+        const oldState = storeState
+        storeState = nextState
+        updaters.forEach(updater => {
+          updater.update(updater.set, oldState, nextState)
+        })
+      }
+      return result
+    }
+    return
   }
 
   return { useStore, dispatch, getState }
