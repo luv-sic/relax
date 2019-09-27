@@ -1,16 +1,26 @@
 <img src="http://forsigner.com/images/dahlia/dahlia-stamen.svg"  align="center"/>
 
-# Stamen
+# Relax
 
-[![npm](https://img.shields.io/npm/v/stamen.svg)](https://www.npmjs.com/package/stamen) [![Build Status](https://travis-ci.org/forsigner/stamen.svg?branch=master)](https://travis-ci.org/forsigner/stamen) [](https://coveralls.io/github/forsigner/stamen?branch=master)
-[![npm](https://img.shields.io/badge/TypeScript-%E2%9C%93-007ACC.svg)](https://www.typescriptlang.org/) [![GitHub license](https://img.shields.io/github/license/forsigner/stamen.svg)](https://github.com/forsigner/stamen/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/v/relax-ts.svg)](https://www.npmjs.com/package/relax-ts) [![Build Status](https://travis-ci.org/luv-sic/relax.svg?branch=master)](https://travis-ci.org/luv-sic/relax) [](https://coveralls.io/github/luv-sic/relax?branch=master)
+[![npm](https://img.shields.io/badge/TypeScript-%E2%9C%93-007ACC.svg)](https://www.typescriptlang.org/) [![GitHub license](https://img.shields.io/github/license/luv-sic/relax.svg)](https://github.com/luv-sic/relax/blob/master/LICENSE)
 
-> A React state management library Based on Hooks
+> A React state management library Based on Hooks, it begins as a fork of [stamen](https://github.com/forsigner/stamen).
+
+## Feature
+
+Relax is opinionated, it has the these benefits.
+
+* Simplified API, like Vuex
+* Typescript friendly
+* No boilerplate code, no `createAction`
+* Hooks based, no `Provider、connect、mapState`
+* Multiple store/module
 
 ## Installation
 
 ```sh
-yarn add stamen
+yarn add relax-ts
 ```
 
 ## Quick Start
@@ -18,7 +28,7 @@ yarn add stamen
 ```js
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'stamen'
+import { createStore } from 'relax-ts'
 
 const { useSelector, dispatch } = createStore({
   state: {
@@ -63,14 +73,14 @@ Check on CodeSandbox: [Basic](https://codesandbox.io/s/0vrrlkjx5w) | [Async](htt
 
 ## Examples
 
-- [Basic](https://github.com/forsigner/stamen/tree/master/examples/basic) - Most basic usage
-- [Async](https://github.com/forsigner/stamen/tree/master/examples/async) - To query data from remote server
-- [TodoMVC](https://github.com/forsigner/stamen/tree/master/examples/todomvc) - stamen version TodoMVC
-- [Recommended usage](https://github.com/forsigner/stamen/tree/master/examples/recommended-usage) - Recommended practice with stamen
+- [Basic](https://github.com/luv-sic/relax/tree/master/examples/basic) - Most basic usage
+- [Async](https://github.com/luv-sic/relax/tree/master/examples/async) - To query data from remote server
+- [TodoMVC](https://github.com/luv-sic/relax/tree/master/examples/todomvc) - Relax version TodoMVC
+- [Recommended usage](https://github.com/luv-sic/relax/tree/master/examples/recommended-usage) - Recommended practice with Relax
 
 ## Guide
 
-Stamen is simple, only two step to setup it.
+Relax is simple, only two step to setup it.
 
 Step 1: creat a store
 
@@ -136,7 +146,7 @@ const someStore = createStore({
 
 ### reducers
 
-Two type action in Stamen: reducers and effects, you can update state in reducers only.
+Two type action in Relax: reducers and effects, you can update state in reducers only.
 
 ```js
 const someStore = createStore({
@@ -197,16 +207,6 @@ const App = () => {
 }
 ```
 
-## FAQ
-
-**Support Typescript?**
-
-Yes, it is total type-safety. Perfect with Typescript.
-
-**Single store or Multiple store?**
-
-Personally, I would recommend a multi-part solution. More flexible and less Potential performance issues.
-
 ## License
 
-[MIT License](https://github.com/forsigner/stamen/blob/master/LICENSE)
+[MIT License](https://github.com/luv-sic/relax/blob/master/LICENSE)
