@@ -20,7 +20,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'stamen'
 
-const { useStore, dispatch } = createStore({
+const { useSelector, dispatch } = createStore({
   state: {
     count: 10,
   },
@@ -39,19 +39,19 @@ const { useStore, dispatch } = createStore({
           resolve()
         }, 1000)
       })
-      dispatch(A => A.increment)
+      dispatch('increment')
     },
   },
 })
 
 const App = () => {
-  const count = useStore(S => S.count)
+  const count = useSelector(S => S.count)
   return (
     <div>
       <span>{count}</span>
-      <button onClick={() => dispatch(A => A.decrement)}>-</button>
-      <button onClick={() => dispatch(A => A.increment)}>+</button>
-      <button onClick={() => dispatch(A => A.asyncIncrement)}>async+</button>
+      <button onClick={() => dispatch('decrement')}>-</button>
+      <button onClick={() => dispatch('increment')}>+</button>
+      <button onClick={() => dispatch('asyncIncrement')}>async+</button>
     </div>
   )
 }
@@ -94,13 +94,13 @@ Step 1: use it in view
 
 ```js
 const App = () => {
-  const { useStore, dispatch } = counterStore
-  const count = useStore(S => S.count)
+  const { useSelector, dispatch } = counterStore
+  const count = useSelector(S => S.count)
   return (
     <div>
       <span>{count}</span>
-      <button onClick={() => dispatch(A => A.decrement)}>-</button>
-      <button onClick={() => dispatch(A => A.increment)}>+</button>
+      <button onClick={() => dispatch('decrement')}>-</button>
+      <button onClick={() => dispatch('increment')}>+</button>
     </div>
   )
 }
@@ -119,7 +119,7 @@ const someStore = createStore({
   affects: {},
 })
 
-const { useStore, dispatch } = someStore
+const { useSelector, dispatch } = someStore
 ```
 
 ### state
@@ -161,20 +161,20 @@ const someStore = createStore({
           resolve()
         }, 1000)
       })
-      someStore.dispatch(A => A.increment)
+      someStore.dispatch('increment')
     },
   },
 })
 ```
 
-### useStore
+### useSelector
 
 Get state in view using react hooks api.
 
 ```js
 const App = () => {
-  const { useStore } = counterStore
-  const count = useStore(S => S.count)
+  const { useSelector } = counterStore
+  const count = useSelector(S => S.count)
   return <span>{count}</span>
 }
 ```
@@ -185,7 +185,7 @@ Dispatch an Action to update state.
 
 ```js
 const App = () => {
-  const { useStore, dispatch } = counterStore
+  const { useSelector, dispatch } = counterStore
   const count = useStore(S => S.count)
   return (
     <div>
