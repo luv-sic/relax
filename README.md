@@ -2,18 +2,17 @@
 
 # Relax
 
-[![npm](https://img.shields.io/npm/v/relax-ts.svg)](https://www.npmjs.com/package/relax-ts) [![Build Status](https://travis-ci.org/luv-sic/relax.svg?branch=master)](https://travis-ci.org/luv-sic/relax) [](https://coveralls.io/github/luv-sic/relax?branch=master)
+[![npm](https://img.shields.io/npm/v/relax-ts.svg)](https://www.npmjs.com/package/relax-ts) [![Build Status](https://travis-ci.org/luv-sic/relax.svg?branch=master)](https://travis-ci.org/luv-sic/relax) [![Coverage Status](https://coveralls.io/repos/github/luv-sic/relax/badge.svg?branch=master)](https://coveralls.io/github/luv-sic/relax?branch=master)
 [![npm](https://img.shields.io/badge/TypeScript-%E2%9C%93-007ACC.svg)](https://www.typescriptlang.org/) [![GitHub license](https://img.shields.io/github/license/luv-sic/relax.svg)](https://github.com/luv-sic/relax/blob/master/LICENSE)
 
-> A React state management library Based on Hooks, it begins as a fork of [stamen](https://github.com/forsigner/stamen).
+> A React state management library Based on Hooks, it begins as a fork of [stamen](https://github.com/forsigner/stamen)
 
 ## Feature
 
-Relax is opinionated, it has the these benefits.
+Relax is opinionated, it has these benefits:
 
 * Simplified API, like Vuex
 * Typescript friendly
-* No boilerplate code, no `createAction`
 * Hooks based, no `Provider、connect、mapState`
 * Multiple store/module
 
