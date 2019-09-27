@@ -1,9 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import { createStore } from 'stamen'
-import { createStore } from './src'
+import { createStore } from 'relax-ts';
 
-const { useStore, dispatch } = createStore({
+const { useSelector, dispatch } = createStore({
   state: {
     count: 10,
     name: 'forsigner',
@@ -27,25 +26,25 @@ const { useStore, dispatch } = createStore({
           resolve()
         }, 1000)
       })
-      dispatch(A => A.increment)
+      dispatch('increment')
     },
   },
 })
 
 setTimeout(async () => {
-  const name =  await dispatch(A => A.setName)
+  const name =  await dispatch('setName')
   console.log('name:', name)
 }, 2000)
 
 const App = () => {
-  const count = useStore(S => S.count)
+  const count = useSelector(s => s.count)
   console.log('render......')
   return (
     <div>
       <span>{count}</span>
-      <button onClick={() => dispatch(A => A.decrement)}>-</button>
-      <button onClick={() => dispatch(A => A.increment)}>+</button>
-      <button onClick={() => dispatch(A => A.asyncIncrement)}>async+</button>
+      <button onClick={() => dispatch('decrement')}>-</button>
+      <button onClick={() => dispatch('increment')}>+</button>
+      <button onClick={() => dispatch('asyncIncrement')}>async+</button>
     </div>
   )
 }

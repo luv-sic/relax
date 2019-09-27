@@ -1,8 +1,8 @@
 import React from 'react'
-import { useStore, dispatch } from '../stores/counterStore'
+import { useSelector, dispatch } from '../stores/counterStore'
 
 const Counter = () => {
-  const { name, count } = useStore(S => S)
+  const { name, count } = useSelector(s => s)
   return (
     <div className="box">
       <h2>{name}</h2>

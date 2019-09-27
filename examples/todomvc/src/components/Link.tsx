@@ -1,6 +1,6 @@
 import * as React from 'react'
 import classnames from 'classnames'
-import { useStore, dispatch } from '../stores/todoStore'
+import { useSelector, dispatch } from '../stores/todoStore'
 
 interface LinkProp {
   filter: string
@@ -9,7 +9,7 @@ interface LinkProp {
 }
 
 const Link: React.SFC<LinkProp> = ({ active, children, filter }) => {
-  const visibilityFilter = useStore(S => S.visibilityFilter)
+  const visibilityFilter = useSelector(s => s.visibilityFilter)
   return (
     <React.Fragment>
       <a

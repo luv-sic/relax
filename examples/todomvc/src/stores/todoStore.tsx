@@ -1,4 +1,4 @@
-import { createStore } from 'stamen'
+import { createStore } from 'relax-ts'
 import { SHOW_ALL } from '../constants/TodoFilters'
 
 export interface TodoType {
@@ -23,7 +23,7 @@ const initialState: State = {
   visibilityFilter: SHOW_ALL,
 }
 
-export const { useStore, dispatch } = createStore({
+export const { useSelector, dispatch } = createStore({
   state: initialState,
   reducers: {
     addTodo(state, text: string) {
@@ -65,4 +65,4 @@ export const { useStore, dispatch } = createStore({
   effects: {},
 })
 
-export default { useStore, dispatch }
+export default { useSelector, dispatch }

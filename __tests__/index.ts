@@ -12,6 +12,9 @@ const { useSelector, dispatch, getState } = createStore({
     decrement(state, payload: number) {
       state.count -= payload
     },
+    setCount(state, payload) {
+      state.count = payload
+    },
   },
   effects: {
     async asyncIncrement(payload) {
@@ -26,7 +29,7 @@ const { useSelector, dispatch, getState } = createStore({
 })
 
 test('useStore', async () => {
-  const { result } = renderHook(() => useSelector(s => s.count))
+  const { result, unmount } = renderHook(() => useSelector(s => s.count))
 
   expect(result.current).toBe(0)
 
@@ -52,4 +55,11 @@ test('useStore', async () => {
   })
 
   expect(result.current).toBe(0)
+
+  await act(async () => {
+    await dispatch('setCount', 2)
+  })
+  expect(result.current).toBe(2)
+
+  unmount()
 })

@@ -1,6 +1,6 @@
-import { createStore } from 'stamen'
+import { createStore } from 'relax-ts'
 
-export const { useStore, dispatch } = createStore({
+export const { useSelector, dispatch } = createStore({
   state: {
     id: '2668081',
     type: 'User',
@@ -25,4 +25,4 @@ export const { useStore, dispatch } = createStore({
   },
 })
 
-export default { useStore, dispatch }
+export default { useSelector, dispatch }

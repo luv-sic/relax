@@ -1,4 +1,4 @@
-import { createStore } from 'stamen'
+import { createStore } from 'relax-ts'
 
 interface Post {
   id: number
@@ -17,7 +17,7 @@ const initialState: State = {
   posts: [],
 }
 
-export const { useStore, dispatch } = createStore({
+export const { useSelector, dispatch } = createStore({
   state: initialState,
   reducers: {
     updateLoading(state, status: boolean) {
@@ -49,4 +49,4 @@ function sleep(time: number) {
   })
 }
 
-export default { useStore, dispatch }
+export default { useSelector, dispatch }

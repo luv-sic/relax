@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { useStore, dispatch } from '../stores/postStore'
+import { useSelector, dispatch } from '../stores/postStore'
 
 const Posts = () => {
-  const { loading, posts } = useStore(S => S)
+  const { loading, posts } = useSelector(s => s)
   useEffect(() => {
     dispatch('fetchPost')
   })

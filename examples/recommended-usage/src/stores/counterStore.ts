@@ -1,6 +1,6 @@
-import { createStore } from 'stamen'
+import { createStore } from 'relax-ts'
 
-export const { useStore, dispatch } = createStore({
+export const { useSelector, dispatch } = createStore({
   state: {
     count: 10,
     name: 'Counter',
@@ -33,4 +33,4 @@ function sleep(time: number) {
   })
 }
 
-export default { useStore, dispatch }
+export default { useSelector, dispatch }
