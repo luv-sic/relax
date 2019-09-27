@@ -1,6 +1,6 @@
 {
-  "name": "stamen",
-  "version": "1.11.0",
+  "name": "relax-ts",
+  "version": "0.1",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -52,14 +52,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/forsigner/stamen.git"
+    "url": "git+ssh://git@github.com/luv-sic/relax.git"
   },
   "author": "forsigner",
   "license": "MIT",
   "bugs": {
-    "url": "https://.com/forsigner/stamen/issues"
+    "url": "https://github.com/luv-sic/relax/issues"
   },
-  "homepage": "https://github.com/forsigner/stamen#README",
+  "homepage": "https://github.com/luv-sic/relax",
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
