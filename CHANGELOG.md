@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.0.2](https://github.com/luv-sic/relax/compare/v1.11.0...v0.0.2) (2020-07-05)
+
+
+### Features
+
+* improve performance ([360b3a5](https://github.com/luv-sic/relax/commit/360b3a505e57f529a1065d2f4718b455e529d225))
+
+
+
 # [1.11.0](https://github.com/forsigner/stamen/compare/v1.10.1...v1.11.0) (2019-07-12)
 
 
