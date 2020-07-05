@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, createContext, FC, ReactNode } from 'react'
 import equal from 'fast-deep-equal'
 
 import produce from 'immer'
@@ -15,8 +15,9 @@ import {
 } from './typings'
 
 function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S, R, E>) {
-  let storeState: S = model.state
   const subscribers: Array<Subscriber<S>> = []
+  const StoreContext = createContext<S>(model.state)
+  let storeState = model.state
 
   function useSelector<P>(selector: StateSelector<S, P>) {
     const [state, setState] = useState(() => selector(storeState))
@@ -30,8 +31,8 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S
 
     useEffect(() => {
       subscribers.push(subscriber)
-      const index = subscribers.indexOf(subscriber)
       return () => {
+        const index = subscribers.indexOf(subscriber)
         subscribers.splice(index, 1)
       }
     }, [])
@@ -74,7 +75,17 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S
     return
   }
 
-  return { useSelector, dispatch, getState }
+  const EnhancedProvider: FC<{
+    initialState?: S
+    children: ReactNode
+  }> = ({ initialState, children }) => {
+    if (initialState) {
+      storeState = initialState
+    }
+    return <StoreContext.Provider value={initialState as S}>{children}</StoreContext.Provider>
+  }
+
+  return { useSelector, dispatch, getState, Provider: EnhancedProvider }
 }
 
 export { createStore }

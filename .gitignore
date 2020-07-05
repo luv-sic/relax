@@ -11,3 +11,4 @@ dist/
 coverage/
 .docz/
 yarn.lock
+.cache

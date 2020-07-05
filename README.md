@@ -13,7 +13,7 @@ Relax is opinionated, it has these benefits:
 
 * Simplified API, like Vuex
 * Typescript friendly
-* Hooks based, no `Provider、connect、mapState`
+* Hooks based, no `connect、mapState`
 * Multiple store/module
 
 ## Installation
@@ -27,11 +27,11 @@ yarn add relax-ts
 ```js
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'relax-ts'
+import { createStore } from '../../src'
 
-const { useSelector, dispatch } = createStore({
+const { useSelector, dispatch, Provider } = createStore({
   state: {
-    count: 10,
+    count: 0,
   },
   reducers: {
     increment(state) {
@@ -53,15 +53,25 @@ const { useSelector, dispatch } = createStore({
   },
 })
 
-const App = () => {
+const Counter = () => {
   const count = useSelector(S => S.count)
   return (
     <div>
       <span>{count}</span>
-      <button onClick={() => dispatch('decrement')}>-</button>
-      <button onClick={() => dispatch('increment')}>+</button>
-      <button onClick={() => dispatch('asyncIncrement')}>async+</button>
+      <div>
+        <button onClick={() => dispatch('decrement')}>-</button>
+        <button onClick={() => dispatch('increment')}>+</button>
+        <button onClick={() => dispatch('asyncIncrement')}>async+</button>
+      </div>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Provider initialState={{ count: 10 }}>
+      <Counter />
+    </Provider>
   )
 }
 
@@ -73,49 +83,7 @@ Check on CodeSandbox: [Basic](https://codesandbox.io/s/0vrrlkjx5w) | [Async](htt
 ## Examples
 
 - [Basic](https://github.com/luv-sic/relax/tree/master/examples/basic) - Most basic usage
-- [Async](https://github.com/luv-sic/relax/tree/master/examples/async) - To query data from remote server
 - [TodoMVC](https://github.com/luv-sic/relax/tree/master/examples/todomvc) - Relax version TodoMVC
-- [Recommended usage](https://github.com/luv-sic/relax/tree/master/examples/recommended-usage) - Recommended practice with Relax
-
-## Guide
-
-Relax is simple, only two step to setup it.
-
-Step 1: creat a store
-
-```js
-const counterStore = createStore({
-  state: {
-    count: 10,
-  },
-  reducers: {
-    increment(state) {
-      state.count++
-    },
-    decrement(state) {
-      state.count--
-    },
-  },
-})
-```
-
-Step 1: use it in view
-
-```js
-const App = () => {
-  const { useSelector, dispatch } = counterStore
-  const count = useSelector(S => S.count)
-  return (
-    <div>
-      <span>{count}</span>
-      <button onClick={() => dispatch('decrement')}>-</button>
-      <button onClick={() => dispatch('increment')}>+</button>
-    </div>
-  )
-}
-```
-
-That's it!
 
 ## Api
 
