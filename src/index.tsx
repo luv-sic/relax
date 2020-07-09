@@ -82,10 +82,13 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S
     initialState?: S
     children: ReactNode
   }> = ({ initialState, children }) => {
-    if (initialState) {
-      notify(storeState, initialState)
-      storeState = initialState
-    }
+    // useEffect to prevent update Provider's child component while rendering Provider
+    useEffect(() => {
+      if (initialState) {
+        notify(storeState, initialState)
+        storeState = initialState
+      }
+    }, [initialState])
     return <StoreContext.Provider value={initialState as S}>{children}</StoreContext.Provider>
   }
 
