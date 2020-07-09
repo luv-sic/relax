@@ -64,15 +64,18 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S
         const nextState: S = produce<S, S>(storeState, (draft: S) => {
           result = reducer(draft, payload)
         })
-        const oldState = storeState
+        notify(storeState, nextState)
         storeState = nextState
-        subscribers.forEach(subscriber => {
-          subscriber(oldState, nextState)
-        })
       }
       return result
     }
     return
+  }
+
+  function notify(oldState: S, nextState: S) {
+    subscribers.forEach(subscriber => {
+      subscriber(oldState, nextState)
+    })
   }
 
   const EnhancedProvider: FC<{
@@ -80,6 +83,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S
     children: ReactNode
   }> = ({ initialState, children }) => {
     if (initialState) {
+      notify(storeState, initialState)
       storeState = initialState
     }
     return <StoreContext.Provider value={initialState as S}>{children}</StoreContext.Provider>
