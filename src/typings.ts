@@ -1,6 +1,6 @@
 export interface Model<S, R, E> {
   state: S
-  reducers?: R
+  reducers: R
   effects?: E
 }
 
@@ -10,13 +10,13 @@ export interface Reducers<S> {
   [key: string]: ReducerFn<S>
 }
 
-export type ReducerFn<S> = (state: S, payload?: any) => any
+export type ReducerFn<S, P = any> = (state: S, payload: P) => void | S
 
 export interface Effects {
   [key: string]: EffectFn
 }
 
-export type EffectFn = (payload: any) => Promise<any>
+export type EffectFn<P = any> = (payload: P) => Promise<void>
 
 export type Subscriber<S> = (oldState: S, nextState: S) => any
 

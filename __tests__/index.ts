@@ -15,6 +15,9 @@ const { useSelector, dispatch, getState } = createStore({
     setCount(state, payload) {
       state.count = payload
     },
+    increateWithoutPayload(state) {
+      state.count++
+    },
   },
   effects: {
     async asyncIncrement(payload) {
@@ -38,7 +41,7 @@ test('useStore', async () => {
   })
 
   await act(async () => {
-    await dispatch('increment', 1)
+    await dispatch('increateWithoutPayload')
   })
 
   expect(result.current).toBe(1)

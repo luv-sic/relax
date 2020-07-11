@@ -92,11 +92,11 @@
     "typescript": "^3.4.5"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
   },
   "dependencies": {
-    "fast-deep-equal": "^2.0.1",
-    "immer": "^3.1.2"
+    "fast-deep-equal": "3.*",
+    "immer": "7.*"
   }
 }

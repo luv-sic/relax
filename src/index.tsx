@@ -6,7 +6,6 @@ import { getActionName } from './util'
 import {
   Model,
   Reducers,
-  ReducerFn,
   Effects,
   StateSelector,
   Subscriber,
@@ -59,7 +58,7 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S
     if (!action) return null
 
     if (model.reducers) {
-      const reducer: ReducerFn<S> = model.reducers[actionName]
+      const reducer = model.reducers[actionName]
       if (reducer) {
         const nextState: S = produce<S, S>(storeState, (draft: S) => {
           result = reducer(draft, payload)
