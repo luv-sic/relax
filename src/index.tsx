@@ -1,30 +1,23 @@
 import React, { useState, useEffect, createContext, FC, ReactNode } from 'react'
 import equal from 'fast-deep-equal'
-
 import produce from 'immer'
-import { getActionName } from './util'
-import {
-  Model,
-  Reducers,
-  Effects,
-  StateSelector,
-  Subscriber,
-  ExtractActionFromReducersEffects,
-  // ExtractPayloadFromReducersEffects,
-} from './typings'
 
-function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S, R, E>) {
-  const subscribers: Array<Subscriber<S>> = []
-  const StoreContext = createContext<S>(model.state)
+import { Model, Actions, StateSelector, Subscriber, Dispatch } from './typings'
+
+function createStore<S, A extends Actions<S>>(model: Model<S, A>) {
+  const subscribers: Subscriber<S>[] = []
   let storeState = model.state
+  const { actions } = model
+  const StoreContext = createContext<S>(storeState)
 
   function useSelector<P>(selector: StateSelector<S, P>) {
     const [state, setState] = useState(() => selector(storeState))
 
     const subscriber: any = (oldState: S, nextState: S) => {
-      const shouldUpdate = !equal(selector(oldState), selector(nextState))
+      const nextSelector = selector(nextState)
+      const shouldUpdate = !equal(selector(oldState), nextSelector)
       if (shouldUpdate) {
-        setState(() => selector(nextState))
+        setState(nextSelector)
       }
     }
 
@@ -43,33 +36,21 @@ function createStore<S, R extends Reducers<S>, E extends Effects>(model: Model<S
     return storeState
   }
 
-  async function dispatch<A extends ExtractActionFromReducersEffects<R, E>, P = any>(
-    action: A,
-    payload?: P,
-  ) {
-    let result: any
-    const actionName = getActionName(action)
-    if (model.effects && model.effects[actionName]) {
-      result = await model.effects[actionName](payload)
-      return result
-    }
-    if (!subscribers.length) return
-
-    if (!action) return null
-
-    if (model.reducers) {
-      const reducer = model.reducers[actionName]
-      if (reducer) {
-        const nextState: S = produce<S, S>(storeState, (draft: S) => {
-          result = reducer(draft, payload)
+  const dispatch: Dispatch<S, A> = (() => {
+    const actionKeys: Array<keyof A> = Object.keys(actions)
+    const _dispatch = actionKeys.reduce((prev, curr) => {
+      const action = actions[curr]
+      prev[curr] = async (pyaload) => {
+        const nextState = await produce(storeState, async (draft: S) => {
+           await action(draft, pyaload)
         })
         notify(storeState, nextState)
-        storeState = nextState
+        storeState = nextState;
       }
-      return result
-    }
-    return
-  }
+      return prev
+    }, {} as Dispatch<S, A>)
+    return _dispatch
+  })();
 
   function notify(oldState: S, nextState: S) {
     subscribers.forEach(subscriber => {

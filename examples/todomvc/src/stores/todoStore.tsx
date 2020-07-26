@@ -25,7 +25,7 @@ export const initialState: State = {
 
 export const { useSelector, dispatch, Provider } = createStore({
   state: initialState,
-  reducers: {
+  actions: {
     addTodo(state, text: string) {
       state.todos.push({
         id: state.todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
@@ -47,7 +47,7 @@ export const { useSelector, dispatch, Provider } = createStore({
       )
     },
 
-    completeAllTodos(state) {
+    completeAllTodos(state, payload: undefined) {
       const areAllMarked = state.todos.every(todo => todo.completed)
       state.todos = state.todos.map(todo => ({
         ...todo,
@@ -55,12 +55,11 @@ export const { useSelector, dispatch, Provider } = createStore({
       }))
     },
 
-    clearCompleted(state) {
+    clearCompleted(state, payload: undefined) {
       state.todos = state.todos.filter(todo => todo.completed === false)
     },
     setVisibilityFilter(state, filter: string) {
       state.visibilityFilter = filter
     },
   },
-  effects: {},
 })

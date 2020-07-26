@@ -15,7 +15,7 @@ const Link: React.SFC<LinkProp> = ({ active, children, filter }) => {
       <a
         className={classnames({ selected: filter === visibilityFilter })}
         style={{ cursor: 'pointer' }}
-        onClick={() => dispatch('setVisibilityFilter', filter)}
+        onClick={() => dispatch.setVisibilityFilter(filter)}
       >
         {children}
       </a>

@@ -25,32 +25,29 @@ yarn add relax-ts
 ## Quick Start
 
 ```js
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { createStore } from '../../src'
+import { createStore } from 'relax-ts'
 
 const { useSelector, dispatch, Provider } = createStore({
   state: {
     count: 0,
   },
-  reducers: {
-    increment(state) {
-      state.count++
+  actions: {
+    increment(state, payload: number) {
+      state.count += payload;
     },
-    decrement(state) {
-      state.count--
+    decrement(state, payload: number) {
+      state.count -= payload;
     },
-  },
-  effects: {
-    async asyncIncrement() {
+    async asyncIncrement(state, payload: number) {
       await new Promise(resolve => {
         setTimeout(() => {
+          state.count += payload;
           resolve()
         }, 1000)
       })
-      dispatch('increment')
+      dispatch.increment(payload);
     },
-  },
+  }
 })
 
 const Counter = () => {
@@ -59,23 +56,13 @@ const Counter = () => {
     <div>
       <span>{count}</span>
       <div>
-        <button onClick={() => dispatch('decrement')}>-</button>
-        <button onClick={() => dispatch('increment')}>+</button>
-        <button onClick={() => dispatch('asyncIncrement')}>async+</button>
+        <button onClick={() => dispatch.decrement(1)}>-</button>
+        <button onClick={() => dispatch.increment(1)}>+</button>
+        <button onClick={() => dispatch.asyncIncrement(1)}>async+</button>
       </div>
     </div>
   )
 }
-
-function App() {
-  return (
-    <Provider initialState={{ count: 10 }}>
-      <Counter />
-    </Provider>
-  )
-}
-
-ReactDOM.render(<App />, document.getElementById('root'))
 ```
 
 Check on CodeSandbox: [Basic](https://codesandbox.io/s/0vrrlkjx5w) | [Async](https://codesandbox.io/s/kmq65p3l97)

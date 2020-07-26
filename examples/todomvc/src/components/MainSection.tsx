@@ -14,7 +14,7 @@ const MainSection = () => {
         {!!todosCount && (
           <span>
             <input className="toggle-all" type="checkbox" />
-            <label onClick={() => dispatch('completeAllTodos')} />
+            <label onClick={() => dispatch.completeAllTodos()} />
           </span>
         )}
         <TodoList />
@@ -22,7 +22,7 @@ const MainSection = () => {
           <Footer
             completedCount={completedCount}
             activeCount={todosCount - completedCount}
-            onClearCompleted={() => dispatch('clearCompleted')}
+            onClearCompleted={() => dispatch.clearCompleted()}
           />
         )}
       </React.Fragment>

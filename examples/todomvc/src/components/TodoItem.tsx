@@ -15,9 +15,9 @@ const TodoItem: React.SFC<Props> = props => {
 
   const handleSave = (id: number, text: string) => {
     if (text.length === 0) {
-      dispatch('deleteTodo', id)
+      dispatch.deleteTodo(id)
     } else {
-      dispatch('editTodo', { id, text })
+      dispatch.editTodo({ id, text })
     }
     setState(false)
   }
@@ -43,10 +43,10 @@ const TodoItem: React.SFC<Props> = props => {
           className="toggle"
           type="checkbox"
           checked={todo.completed}
-          onChange={() => dispatch('completeTodo', todo.id)}
+          onChange={() => dispatch.completeTodo(todo.id)}
         />
         <label onDoubleClick={handleDoubleClick}>{todo.text}</label>
-        <button className="destroy" onClick={() => dispatch('deleteTodo', todo.id)} />
+        <button className="destroy" onClick={() => dispatch.deleteTodo(todo.id)} />
       </div>
     )
   }

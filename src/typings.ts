@@ -1,30 +1,18 @@
-export interface Model<S, R, E> {
+export interface Model<S, A> {
   state: S
-  reducers: R
-  effects?: E
+  actions: A
 }
 
 export type StateSelector<S, P> = (state: S) => P
 
-export interface Reducers<S> {
-  [key: string]: ReducerFn<S>
+export interface Actions<S> {
+  [key: string]: Action<S>
 }
 
-export type ReducerFn<S, P = any> = (state: S, payload: P) => void | S
-
-export interface Effects {
-  [key: string]: EffectFn
+export type Dispatch<S, A extends Actions<S>> = {
+  [key in keyof A]: (payload?: Parameters<A[key]>[1]) => Promise<void> | void;
 }
 
-export type EffectFn<P = any> = (payload: P) => Promise<void>
+export type Action<S, P = any> = (state: S, payload: P) => Promise<void> | void;
 
-export type Subscriber<S> = (oldState: S, nextState: S) => any
-
-export type ExtractActionFromReducersEffects<R, E> = keyof (R & E)
-
-// export type ExtractPayloadFromReducersEffects<
-//   S,
-//   R extends Reducers<S>,
-//   E extends Effects,
-//   A extends ExtractActionFromReducersEffects<R, E>
-// > = Parameters<R[A]>[1] | Parameters<E[A]>[0]
+export type Subscriber<S> = (oldState: S, nextState: S) => void
