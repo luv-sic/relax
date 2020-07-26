@@ -36,26 +36,32 @@ function createStore<S, A extends Actions<S>>(model: Model<S, A>) {
     return storeState
   }
 
-  const dispatch: Dispatch<S, A> = (() => {
+  function createDispatch() {
     const actionKeys: Array<keyof A> = Object.keys(actions)
-    const _dispatch = actionKeys.reduce((prev, curr) => {
-      const action = actions[curr]
-      prev[curr] = async (pyaload) => {
-        const nextState = await produce(storeState, async (draft: S) => {
-           await action(draft, pyaload)
+    const dispatcher = actionKeys.reduce((dispatches, actionKey) => {
+      const action = actions[actionKey]
+      dispatches[actionKey] = async (payload) => {
+        const oldState = getState();
+        const nextState = await produce(oldState, async (draft: S) => {
+          await action(draft, payload)
         })
-        notify(storeState, nextState)
-        storeState = nextState;
+
+        // FIXME fix in nest dispatch, the outer dispatch execute later, may revert the update by inner dispatch
+        // see test dispatch.asyncIncrement
+        !equal(oldState, nextState) && notify(oldState, nextState)
       }
-      return prev
+      return dispatches
     }, {} as Dispatch<S, A>)
-    return _dispatch
-  })();
+    return dispatcher
+  }
+
+  const dispatch: Dispatch<S, A> = createDispatch();
 
   function notify(oldState: S, nextState: S) {
     subscribers.forEach(subscriber => {
       subscriber(oldState, nextState)
     })
+    storeState = nextState;
   }
 
   const EnhancedProvider: FC<{
@@ -65,8 +71,7 @@ function createStore<S, A extends Actions<S>>(model: Model<S, A>) {
     // useEffect to prevent update Provider's child component while rendering Provider
     useEffect(() => {
       if (initialState) {
-        notify(storeState, initialState)
-        storeState = initialState
+        !equal(storeState, initialState) && notify(storeState, initialState)
       }
     }, [initialState])
     return <StoreContext.Provider value={initialState as S}>{children}</StoreContext.Provider>
